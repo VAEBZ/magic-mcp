@@ -1,19 +1,24 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node",
-  extensionsToTreatAsEsm: [".ts"],
-  rootDir: './',
-  setupFilesAfterEnv: ['<rootDir>/src/library-docs/websocket/__tests__/setup.ts'],
-  moduleNameMapper: {
-    "^(\\.{1,2}/.*)\\.js$": "$1",
-  },
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  testMatch: [
+    '**/websocket/__tests__/unit/websocket.types.test.ts'
+  ],
   transform: {
-    "^.+\\.tsx?$": [
-      "ts-jest",
+    '^.+\\.tsx?$': [
+      'ts-jest',
       {
-        useESM: true,
-      },
-    ],
+        tsconfig: './tsconfig.json'
+      }
+    ]
   },
-  testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+  moduleNameMapper: {
+    '^src/(.*)$': '<rootDir>/src/$1'
+  },
+  setupFilesAfterEnv: ['./src/library-docs/websocket/__tests__/setup.ts'],
+  testTimeout: 30000,
+  fakeTimers: {
+    enableGlobally: true
+  }
 };

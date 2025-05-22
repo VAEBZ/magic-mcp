@@ -72,16 +72,25 @@ export const mockApiGatewayResponse: PostToConnectionCommandOutput & DeleteConne
 };
 
 // Mock send functions
-export const mockDynamoSend = jest.fn().mockImplementation(() => Promise.resolve({
-  $metadata: { httpStatusCode: 200 },
-  Items: [
-    { connectionId: 'test-connection-id', clientContext: 'test-context', isActive: true }
-  ]
-}));
+export const mockDynamoSend = jest.fn().mockImplementation((command) => {
+  if (command instanceof QueryCommand || command instanceof ScanCommand) {
+    return Promise.resolve({
+      $metadata: { httpStatusCode: 200 },
+      Items: [
+        { connectionId: 'test-connection-id', clientContext: 'test-context', isActive: true }
+      ]
+    });
+  }
+  return Promise.resolve({
+    $metadata: { httpStatusCode: 200 }
+  });
+});
 
-export const mockApiGatewaySend = jest.fn().mockImplementation(() => Promise.resolve({
-  $metadata: { httpStatusCode: 200 }
-}));
+export const mockApiGatewaySend = jest.fn().mockImplementation(() => 
+  Promise.resolve({
+    $metadata: { httpStatusCode: 200 }
+  })
+);
 
 // Mock DynamoDB client
 export class MockDynamoDBClient {
@@ -111,27 +120,28 @@ export const resetAwsMocks = () => {
 
 // Mock AWS SDK modules
 jest.mock('@aws-sdk/client-dynamodb', () => ({
-  DynamoDBClient: jest.fn().mockImplementation(() => ({
-    send: mockDynamoSend
-  }))
+  DynamoDBClient: jest.fn().mockImplementation(() => mockDynamoClient)
 }));
 
 jest.mock('@aws-sdk/lib-dynamodb', () => {
-  const actualModule = jest.requireActual('@aws-sdk/lib-dynamodb') as Record<string, unknown>;
+  const actual = jest.requireActual('@aws-sdk/lib-dynamodb');
   return {
-    ...actualModule,
+    ...actual,
     DynamoDBDocumentClient: {
-      from: jest.fn().mockImplementation(() => ({
-        send: mockDynamoSend
-      }))
-    }
+      from: jest.fn().mockReturnValue(mockDocumentClient)
+    },
+    PutCommand: actual.PutCommand,
+    DeleteCommand: actual.DeleteCommand,
+    QueryCommand: actual.QueryCommand,
+    UpdateCommand: actual.UpdateCommand,
+    ScanCommand: actual.ScanCommand
   };
 });
 
 jest.mock('@aws-sdk/client-apigatewaymanagementapi', () => ({
-  ApiGatewayManagementApiClient: jest.fn().mockImplementation(() => ({
-    send: mockApiGatewaySend
-  }))
+  ApiGatewayManagementApiClient: jest.fn().mockImplementation(() => mockApiGatewayClient),
+  PostToConnectionCommand,
+  DeleteConnectionCommand
 }));
 
 // Export commands

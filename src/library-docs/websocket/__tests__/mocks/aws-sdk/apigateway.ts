@@ -1,31 +1,25 @@
 import { jest } from '@jest/globals';
-import { 
-  ApiGatewayManagementApiClient,
-  PostToConnectionCommand,
-  DeleteConnectionCommand,
-  type PostToConnectionCommandInput,
-  type DeleteConnectionCommandInput
-} from '@aws-sdk/client-apigatewaymanagementapi';
 import { mockApiGatewayClient } from './mock-clients';
-
-// Create actual command classes
-const actualCommands = jest.requireActual('@aws-sdk/client-apigatewaymanagementapi') as {
-  PostToConnectionCommand: typeof PostToConnectionCommand;
-  DeleteConnectionCommand: typeof DeleteConnectionCommand;
-};
+import {
+  PostToConnectionCommand,
+  DeleteConnectionCommand
+} from '@aws-sdk/client-apigatewaymanagementapi';
 
 // Mock AWS SDK modules
-jest.mock('@aws-sdk/client-apigatewaymanagementapi', () => ({
-  ApiGatewayManagementApiClient: jest.fn().mockImplementation(() => mockApiGatewayClient),
-  PostToConnectionCommand: actualCommands.PostToConnectionCommand,
-  DeleteConnectionCommand: actualCommands.DeleteConnectionCommand
-}));
+jest.mock('@aws-sdk/client-apigatewaymanagementapi', () => {
+  const actual = jest.requireActual('@aws-sdk/client-apigatewaymanagementapi') as {
+    PostToConnectionCommand: typeof PostToConnectionCommand;
+    DeleteConnectionCommand: typeof DeleteConnectionCommand;
+  };
+  return {
+    ApiGatewayManagementApiClient: jest.fn().mockImplementation(() => mockApiGatewayClient),
+    PostToConnectionCommand: actual.PostToConnectionCommand,
+    DeleteConnectionCommand: actual.DeleteConnectionCommand
+  };
+});
 
 // Export all types
 export {
-  ApiGatewayManagementApiClient,
   PostToConnectionCommand,
-  DeleteConnectionCommand,
-  type PostToConnectionCommandInput,
-  type DeleteConnectionCommandInput
+  DeleteConnectionCommand
 }; 

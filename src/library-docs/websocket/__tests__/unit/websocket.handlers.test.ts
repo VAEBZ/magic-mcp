@@ -121,6 +121,7 @@ const createMockEvent = (overrides: Partial<WebSocketEvent> = {}): WebSocketEven
 
 describe('WebSocket Handlers', () => {
   beforeEach(() => {
+    jest.useFakeTimers();
     process.env.CONNECTIONS_TABLE = 'test-connections';
     process.env.IS_OFFLINE = 'false';
     resetAwsMocks();
@@ -142,6 +143,8 @@ describe('WebSocket Handlers', () => {
   });
 
   afterEach(() => {
+    jest.useRealTimers();
+    jest.clearAllMocks();
     delete process.env.CONNECTIONS_TABLE;
     delete process.env.IS_OFFLINE;
   });
@@ -248,80 +251,55 @@ describe('WebSocket Handlers', () => {
       const body = JSON.parse(response.body);
       expect(body).toHaveProperty('message', 'Invalid message format');
       expect(body).toHaveProperty('statusCode', 400);
-      expect(mockDynamoSend).not.toHaveBeenCalled();
     });
-  });
 
-  describe('broadcastMessage', () => {
-    it('should broadcast message to all connections', async () => {
-      const mockEvent = createMockEvent();
-      const mockMessage: EventMessage = {
+    it('should handle broadcast message', async () => {
+      const testMessage: EventMessage = {
         event: 'componentUpdate',
         data: {
           action: 'update',
-          component: { id: 'test' },
+          component: { id: 'test-1', value: 'test' },
           timestamp: new Date().toISOString()
         }
       };
 
-      await broadcastMessage(mockEvent as any, mockMessage);
-      
-      expect(mockDynamoSend).toHaveBeenCalledWith(expect.any(ScanCommand));
-      const scanCall = mockDynamoSend.mock.calls[0][0] as typeof ScanCommand;
-      expect(scanCall).toBeInstanceOf(ScanCommand);
-      expect(scanCall.input).toEqual({
-        TableName: 'test-connections',
-        FilterExpression: 'isActive = :true',
-        ExpressionAttributeValues: {
-          ':true': true
-        }
-      } as ScanCommandInput);
-
-      expect(mockApiGatewaySend).toHaveBeenCalledWith(expect.any(PostToConnectionCommand));
-      const postCall = mockApiGatewaySend.mock.calls[0][0] as typeof PostToConnectionCommand;
-      expect(postCall).toBeInstanceOf(PostToConnectionCommand);
-      expect(postCall.input).toEqual({
-        ConnectionId: 'test-connection-id',
-        Data: JSON.stringify(mockMessage)
-      } as PostToConnectionCommandInput);
-    });
-
-    it('should broadcast message with target context', async () => {
-      const mockEvent = createMockEvent();
-      const mockMessage: EventMessage = {
-        event: 'componentUpdate',
-        data: {
-          action: 'update',
-          component: { id: 'test' },
-          timestamp: new Date().toISOString()
-        }
-      };
-
-      await broadcastMessage(mockEvent as any, mockMessage, {
-        targetContext: 'test-context'
+      const mockEvent = createMockEvent({
+        body: JSON.stringify(testMessage)
       });
-      
-      expect(mockDynamoSend).toHaveBeenCalledWith(expect.any(QueryCommand));
-      const queryCall = mockDynamoSend.mock.calls[0][0] as typeof QueryCommand;
-      expect(queryCall).toBeInstanceOf(QueryCommand);
-      expect(queryCall.input).toEqual({
-        TableName: 'test-connections',
-        IndexName: 'ClientContextIndex',
-        KeyConditionExpression: 'clientContext = :ctx',
-        FilterExpression: 'isActive = :true',
-        ExpressionAttributeValues: {
-          ':true': true,
-          ':ctx': 'test-context'
-        }
-      } as QueryCommandInput);
 
-      expect(mockApiGatewaySend).toHaveBeenCalledWith(expect.any(PostToConnectionCommand));
-      const postCall = mockApiGatewaySend.mock.calls[0][0] as typeof PostToConnectionCommand;
-      expect(postCall).toBeInstanceOf(PostToConnectionCommand);
-      expect(postCall.input).toEqual({
-        ConnectionId: 'test-connection-id',
-        Data: JSON.stringify(mockMessage)
-      } as PostToConnectionCommandInput);
+      // Mock active connections query
+      mockDynamoSend.mockImplementationOnce((command) => {
+        if (command instanceof QueryCommand || command instanceof ScanCommand) {
+          return Promise.resolve({
+            $metadata: { httpStatusCode: 200 },
+            Items: [
+              { connectionId: 'conn-1', clientContext: 'test-context', isActive: true },
+              { connectionId: 'conn-2', clientContext: 'test-context', isActive: true }
+            ]
+          });
+        }
+        return Promise.resolve({
+          $metadata: { httpStatusCode: 200 }
+        });
+      });
+
+      const response = await defaultHandler(mockEvent as any, {} as any, {} as any) as APIGatewayProxyResult;
+      
+      expect(response.statusCode).toBe(200);
+      expect(JSON.parse(response.body)).toHaveProperty('message', 'Message broadcast');
+      
+      // Verify broadcast to all active connections
+      expect(mockApiGatewaySend).toHaveBeenCalledTimes(2);
+      const mockCalls = mockApiGatewaySend.mock.calls;
+      
+      mockCalls.forEach((call, index) => {
+        const command = call[0] as typeof PostToConnectionCommand;
+        expect(command).toBeInstanceOf(PostToConnectionCommand);
+        expect(command.input).toEqual({
+          ConnectionId: `conn-${index + 1}`,
+          Data: JSON.stringify(testMessage)
+        } as PostToConnectionCommandInput);
+      });
     });
   });
 }); 

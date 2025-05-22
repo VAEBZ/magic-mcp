@@ -1,80 +1,79 @@
 import { EventEmitter } from 'events';
 import { jest } from '@jest/globals';
 
-export class MockWebSocket extends EventEmitter {
-  static CONNECTING = 0;
-  static OPEN = 1;
-  static CLOSING = 2;
-  static CLOSED = 3;
+// WebSocket constants
+const WS_CONNECTING = 0;
+const WS_OPEN = 1;
+const WS_CLOSING = 2;
+const WS_CLOSED = 3;
 
-  url: string;
-  readyState: number;
-  onopen: ((event: Event) => void) | null = null;
-  onclose: ((event: CloseEvent) => void) | null = null;
-  onerror: ((event: Event) => void) | null = null;
-  onmessage: ((event: MessageEvent) => void) | null = null;
-  send: jest.Mock;
-  close: jest.Mock;
+export class MockWebSocket {
+  static CONNECTING = WS_CONNECTING;
+  static OPEN = WS_OPEN;
+  static CLOSING = WS_CLOSING;
+  static CLOSED = WS_CLOSED;
 
-  constructor(url: string) {
-    super();
-    this.url = url;
-    this.readyState = MockWebSocket.CONNECTING;
-    this.send = jest.fn();
-    this.close = jest.fn(() => this.closeConnection(true));
+  onopen: (() => void) | null = null;
+  onclose: (() => void) | null = null;
+  onmessage: ((event: { data: string }) => void) | null = null;
+  onerror: ((error: Event) => void) | null = null;
+  readyState = WS_CONNECTING;
+  send = jest.fn();
+  close = jest.fn(() => this.closeConnection(true));
 
-    // Simulate async connection
-    Promise.resolve().then(() => {
-      if (this.readyState === MockWebSocket.CONNECTING) {
-        this.open();
-      }
-    });
+  constructor(public url: string) {
+    // Simulate async connection - make sure this happens immediately during the test
+    this.readyState = WS_OPEN;
+    setTimeout(() => {
+      if (this.onopen) this.onopen();
+    }, 0);
   }
 
-  private async closeConnection(wasClean: boolean) {
-    if (this.readyState !== MockWebSocket.CLOSING && this.readyState !== MockWebSocket.CLOSED) {
-      this.readyState = MockWebSocket.CLOSING;
-      await Promise.resolve();
-      this.readyState = MockWebSocket.CLOSED;
-      const event = new CloseEvent('close', { wasClean });
-      this.emit('close', event);
-      if (this.onclose) this.onclose(event);
+  closeConnection(wasClean = true) {
+    if (this.readyState === WS_CLOSED || this.readyState === WS_CLOSING) {
+      return false;
     }
-  }
-
-  open(): boolean {
-    if (this.readyState === MockWebSocket.CONNECTING) {
-      this.readyState = MockWebSocket.OPEN;
-      const event = new Event('open');
-      this.emit('open', event);
-      if (this.onopen) this.onopen(event);
-      return true;
-    }
-    return false;
-  }
-
-  async simulateError(error: Error) {
-    const wasOpen = this.readyState === MockWebSocket.OPEN;
-    const event = new ErrorEvent('error', { error });
-    this.emit('error', event);
-    if (this.onerror) this.onerror(event);
     
-    if (wasOpen) {
-      await this.closeConnection(false);
-    } else {
-      this.readyState = MockWebSocket.CLOSED;
-    }
+    this.readyState = WS_CLOSING;
+
+    // Simulate async closing
+    setTimeout(() => {
+      this.readyState = WS_CLOSED;
+      if (this.onclose) this.onclose();
+    }, 0);
+
+    return true;
   }
 
-  simulateMessage(data: any) {
-    if (this.readyState !== MockWebSocket.OPEN) {
+  open() {
+    if (this.readyState !== WS_CONNECTING) {
+      return false;
+    }
+
+    this.readyState = WS_OPEN;
+    if (this.onopen) this.onopen();
+    return true;
+  }
+
+  simulateError(error: Error) {
+    // Create an event-like object with error property
+    const errorEvent = { type: 'error', error } as Event;
+    if (this.onerror) this.onerror(errorEvent);
+    
+    this.closeConnection(false);
+  }
+
+  simulateMessage(data: any): void {
+    if (this.readyState !== WS_OPEN) {
       throw new Error('WebSocket is not open');
     }
-    const event = new MessageEvent('message', { 
-      data: typeof data === 'string' ? data : JSON.stringify(data) 
-    });
-    this.emit('message', event);
-    if (this.onmessage) this.onmessage(event);
+    
+    const messageStr = typeof data === 'string' ? data : JSON.stringify(data);
+    const messageEvent = { data: messageStr };
+    
+    if (this.onmessage) {
+      this.onmessage(messageEvent);
+    }
   }
 }
 

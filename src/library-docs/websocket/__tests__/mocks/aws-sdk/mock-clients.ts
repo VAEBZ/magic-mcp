@@ -1,5 +1,25 @@
 import { jest } from '@jest/globals';
-import { QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { 
+  DynamoDBDocumentClient,
+  PutCommand,
+  DeleteCommand,
+  QueryCommand,
+  UpdateCommand,
+  ScanCommand,
+  type PutCommandInput,
+  type DeleteCommandInput,
+  type QueryCommandInput,
+  type UpdateCommandInput,
+  type ScanCommandInput
+} from '@aws-sdk/lib-dynamodb';
+import {
+  ApiGatewayManagementApiClient,
+  PostToConnectionCommand,
+  DeleteConnectionCommand,
+  type PostToConnectionCommandInput,
+  type DeleteConnectionCommandInput
+} from '@aws-sdk/client-apigatewaymanagementapi';
 
 // Define mock class first
 class MockDynamoDBClient {
@@ -38,6 +58,10 @@ class MockApiGatewayManagementApiClient {
 // Create instance of mock API Gateway client
 export const mockApiGatewayClient = new MockApiGatewayManagementApiClient();
 
+// Mock send functions for direct access
+export const mockDynamoSend = mockDynamoClient.send;
+export const mockApiGatewaySend = mockApiGatewayClient.send;
+
 // Reset functions for mocks
 export const resetDynamoMocks = () => {
   mockDynamoClient.send.mockClear();
@@ -45,4 +69,31 @@ export const resetDynamoMocks = () => {
 
 export const resetApiGatewayMocks = () => {
   mockApiGatewayClient.send.mockClear();
+};
+
+// Combined reset function
+export const resetAwsMocks = () => {
+  resetDynamoMocks();
+  resetApiGatewayMocks();
+};
+
+// Export all types and commands
+export {
+  DynamoDBClient,
+  DynamoDBDocumentClient,
+  PutCommand,
+  DeleteCommand,
+  QueryCommand,
+  UpdateCommand,
+  ScanCommand,
+  type PutCommandInput,
+  type DeleteCommandInput,
+  type QueryCommandInput,
+  type UpdateCommandInput,
+  type ScanCommandInput,
+  ApiGatewayManagementApiClient,
+  PostToConnectionCommand,
+  DeleteConnectionCommand,
+  type PostToConnectionCommandInput,
+  type DeleteConnectionCommandInput
 }; 

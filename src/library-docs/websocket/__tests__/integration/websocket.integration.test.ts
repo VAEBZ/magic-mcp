@@ -47,17 +47,16 @@ describe('WebSocket Integration', () => {
     });
 
     // Connect both clients
-    await Promise.all([
-      ws1.connect(),
-      ws2.connect(),
-      // Let microtask queue process
-      Promise.resolve()
-    ]);
+    const connectPromises = [ws1.connect(), ws2.connect()];
+    
+    // Advance timers to handle connection setup
+    jest.advanceTimersByTime(10);
+    await Promise.all(connectPromises);
   });
 
   afterAll(() => {
-    ws1.disconnect();
-    ws2.disconnect();
+    ws1?.disconnect();
+    ws2?.disconnect();
     jest.useRealTimers();
     jest.clearAllMocks();
   });
@@ -68,8 +67,12 @@ describe('WebSocket Integration', () => {
   });
 
   it('should handle ping/pong', async () => {
+    // Advance time to trigger ping
     jest.advanceTimersByTime(100);
-    await Promise.resolve(); // Let microtask queue process
+    
+    // Wait for any promises to resolve
+    await Promise.resolve();
+    
     expect(mockWs1.send).toHaveBeenCalledWith(JSON.stringify({ action: 'ping' }));
     expect(mockWs2.send).toHaveBeenCalledWith(JSON.stringify({ action: 'ping' }));
   });
@@ -90,9 +93,13 @@ describe('WebSocket Integration', () => {
     ws1.on('componentUpdate', handler1);
     ws2.on('componentUpdate', handler2);
 
+    // Send messages
     mockWs1.simulateMessage(testMessage);
     mockWs2.simulateMessage(testMessage);
-    await Promise.resolve(); // Let microtask queue process
+    
+    // Advance timers and wait for promises
+    jest.advanceTimersByTime(10);
+    await Promise.resolve();
 
     expect(handler1).toHaveBeenCalledWith(testMessage);
     expect(handler2).toHaveBeenCalledWith(testMessage);
@@ -106,9 +113,12 @@ describe('WebSocket Integration', () => {
     const mockWs3 = new MockWebSocket('ws://localhost:8080');
     (global as any).WebSocket = jest.fn().mockImplementation(() => mockWs3);
 
-    // Trigger reconnect and wait for it to complete
-    await ws1.connect();
-    await Promise.resolve(); // Let microtask queue process
+    // Trigger reconnect
+    const connectPromise = ws1.connect();
+    
+    // Advance timers to handle connection setup
+    jest.advanceTimersByTime(10);
+    await connectPromise;
 
     expect(ws1.isConnected()).toBe(true);
   });
@@ -124,12 +134,16 @@ describe('WebSocket Integration', () => {
 
     // Wait for auto-reconnect
     jest.advanceTimersByTime(50);
-    await Promise.resolve(); // Let microtask queue process
+    await Promise.resolve();
+
+    // Advance timers to handle connection setup
+    jest.advanceTimersByTime(10);
+    await Promise.resolve();
 
     expect(ws1.isConnected()).toBe(true);
   });
 
-  it('should maintain message order', () => {
+  it('should maintain message order', async () => {
     const messages: string[] = [];
     const handler = (msg: EventMessage) => {
       messages.push(msg.data.component.id);
@@ -147,7 +161,12 @@ describe('WebSocket Integration', () => {
       }
     }));
 
-    testMessages.forEach(msg => mockWs1.simulateMessage(msg));
+    // Send messages with small delays to ensure order
+    for (const msg of testMessages) {
+      mockWs1.simulateMessage(msg);
+      jest.advanceTimersByTime(1);
+      await Promise.resolve();
+    }
 
     expect(messages).toEqual(testMessages.map(m => m.data.component.id));
   });
