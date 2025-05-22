@@ -1,0 +1,498 @@
+{
+  "metadata": {
+    "schema_version": "2.0",
+    "tenant_id": "vaebz-platform",
+    "last_updated": "2024-06-18T12:00:00Z",
+    "domain": "proposals_system",
+    "team": "Engineering Team",
+    "tags": ["babelfish", "proposal", "agentic", "sentinel", "marvin", "workflow"]
+  },
+  "user_stories": [
+    {
+      "id": "PROP-001",
+      "title": "Create idea for proposal system",
+      "user_story": "As a team member, I want to submit initial ideas for potential proposals in a lightweight format, so that concepts can be quickly captured and considered before investing in a full proposal document.",
+      "acceptance_criteria": [
+        "Users can create a new idea with a title, brief description, and key benefits/impact",
+        "The idea submission interface is minimal and quick to complete (< 2 minutes)",
+        "Ideas are automatically tagged with relevant metadata (originator, timestamp, domain)",
+        "Ideas are visible in a dedicated 'Ideas Board' within SentinelGaze UI",
+        "Users can add comments or upvote existing ideas",
+        "Ideas can be filtered and sorted by popularity, recency, or domain"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "team_member",
+      "epic": "Proposal Workflow",
+      "effort": "m",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Engineering Team", "Product Team"],
+      "tags": ["idea_generation", "collaboration", "proposals_system"],
+      "notes": "This represents the first step in our proposal workflow. Ideas should be collected with minimal friction.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-001-a8b7c6d5",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["idea", "proposal", "lightweight", "capture", "concept", "submit", "quick", "collaborative"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 6,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-002",
+      "title": "Convert idea to structured proposal",
+      "user_story": "As a team member, I want to convert a promising idea into a structured proposal using a standardized template with rich metadata, so that it can be properly evaluated, tracked, and eventually implemented through the BabelFish system.",
+      "acceptance_criteria": [
+        "Users can select an existing idea and convert it to a proposal with one click",
+        "The proposal form pre-populates with data from the idea",
+        "The proposal form enforces the standard template structure with required fields",
+        "YAML frontmatter is automatically generated with appropriate metadata",
+        "Users can save drafts of proposals before submission",
+        "The system validates the proposal format before submission",
+        "Proposals are stored in the appropriate directory based on type (fix, feature, doc)"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "team_member",
+      "epic": "Proposal Workflow",
+      "effort": "l",
+      "business_value": "high",
+      "dependencies": ["PROP-001"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Engineering Team", "Product Team"],
+      "tags": ["proposal_creation", "template", "metadata", "babelfish"],
+      "notes": "Proper metadata is critical for BabelFish to enable routing and RBAC enforcement.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-002-d7e8f9g0",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["proposal", "template", "structure", "metadata", "convert", "idea", "standardized", "frontmatter"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 7,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-003",
+      "title": "Collect related files in proposals inbox",
+      "user_story": "As a proposal author, I want to collect and associate supporting documents, research materials, and reference files with my proposal in a dedicated 'Proposals Inbox', so that all relevant materials are centralized and can be processed together.",
+      "acceptance_criteria": [
+        "Users can upload or link supporting files to a proposal",
+        "Files can be uploaded to a dedicated 'inbox/' directory",
+        "Files are automatically tagged with preliminary metadata (proposal ID, type, timestamp)",
+        "The system maintains associations between proposals and their supporting files",
+        "Users can view all files associated with a proposal in one place",
+        "The system supports various file types including documents, images, and code samples",
+        "Files in the inbox can be organized by proposal or category"
+      ],
+      "priority": "medium",
+      "domain": "proposals_system",
+      "persona": "proposal_author",
+      "epic": "Proposal Workflow",
+      "effort": "m",
+      "business_value": "medium",
+      "dependencies": ["PROP-002"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Engineering Team", "Content Team"],
+      "tags": ["inbox", "files", "supporting_documents", "organization"],
+      "notes": "The Proposals Inbox acts as a staging area for related files that need further processing.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-003-h1i2j3k4",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["inbox", "supporting", "documents", "files", "associate", "upload", "centralize", "organize"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 7,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-004",
+      "title": "Agentic generation of user stories from proposal",
+      "user_story": "As a product manager, I want the system to automatically generate well-structured user stories from approved proposals using Marvin-guided AI agents, so that we can rapidly move from concept approval to implementation planning without manual rewriting.",
+      "acceptance_criteria": [
+        "The system extracts key requirements and objectives from the proposal document",
+        "Marvin agent analyzes the proposal and generates a set of comprehensive user stories",
+        "Generated user stories follow the standard format with acceptance criteria",
+        "Generated user stories include metadata fields (priority, domain, persona, etc.)",
+        "User stories are properly interlinked with dependencies identified",
+        "Generated stories are presented for human review before finalization",
+        "Approved user stories are automatically added to the user stories repository",
+        "The system updates the proposal status to reflect user story generation completion"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "product_manager",
+      "epic": "Agentic Workflow",
+      "effort": "xl",
+      "business_value": "high",
+      "dependencies": ["PROP-002"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Product Team", "Engineering Team"],
+      "tags": ["agentic", "user_stories", "marvin", "automation", "ai"],
+      "notes": "This story represents a key automation point in transitioning from proposal to implementation planning.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-004-l5m6n7o8",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["agentic", "generate", "user_stories", "marvin", "automation", "proposal", "extract", "requirements"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 8,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-005",
+      "title": "Agentic creation of PRD from user stories",
+      "user_story": "As a product manager, I want the system to automatically generate a comprehensive Product Requirements Document (PRD) from the user stories, so that all requirements are formally documented with technical specifications and integration points.",
+      "acceptance_criteria": [
+        "The system aggregates all user stories associated with a proposal",
+        "Marvin agent synthesizes user stories into cohesive PRD sections",
+        "Generated PRD follows standardized structure with introduction, scope, and detailed requirements",
+        "PRD includes technical specifications, integration points, and dependencies",
+        "The document captures non-functional requirements (performance, security, compliance)",
+        "Generated PRD is presented for human review before finalization",
+        "Approved PRD is stored in the appropriate repository with correct metadata",
+        "The system updates the proposal and user story statuses to reflect PRD creation"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "product_manager",
+      "epic": "Agentic Workflow",
+      "effort": "xl",
+      "business_value": "high",
+      "dependencies": ["PROP-004"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Product Team", "Engineering Team"],
+      "tags": ["agentic", "prd", "documentation", "marvin", "requirements"],
+      "notes": "The PRD serves as the formal documentation that guides technical implementation.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-005-p9q0r1s2",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["prd", "requirements", "document", "generate", "agentic", "specifications", "technical", "formal"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 8,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-006",
+      "title": "Agentic test case generation",
+      "user_story": "As a quality engineer, I want the system to automatically generate comprehensive test cases from the PRD and user stories, so that all requirements are properly validated with both unit and integration tests.",
+      "acceptance_criteria": [
+        "The system analyzes the PRD and user stories to identify testable requirements",
+        "Marvin agent generates unit test specifications for each functional requirement",
+        "Marvin agent generates integration test scenarios for cross-component functionality",
+        "Test cases include edge cases, error conditions, and performance criteria",
+        "Generated tests follow standard testing frameworks for the target implementation",
+        "Test specifications link back to the specific requirements they validate",
+        "Test cases are presented for human review before finalization",
+        "Approved test specifications are stored in the appropriate repository with correct metadata"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "quality_engineer",
+      "epic": "Agentic Workflow",
+      "effort": "l",
+      "business_value": "high",
+      "dependencies": ["PROP-005"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["QA Team", "Engineering Team"],
+      "tags": ["agentic", "testing", "quality", "test_cases", "validation"],
+      "notes": "Test generation should be aligned with the implementation technology stack.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-006-t3u4v5w6",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["test", "generate", "cases", "unit", "integration", "validation", "requirements", "quality"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 8,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-007",
+      "title": "Agentic code generation and implementation",
+      "user_story": "As a developer, I want the system to generate implementation code based on the PRD, user stories, and test specifications, so that development can be accelerated while maintaining high quality standards.",
+      "acceptance_criteria": [
+        "The system analyzes the PRD, user stories, and test specifications to understand implementation requirements",
+        "Marvin agent generates implementation code following best practices and coding standards",
+        "Generated code includes proper documentation, error handling, and logging",
+        "The code is structured to pass all generated test cases",
+        "Generated code follows the architectural patterns of the existing system",
+        "Code is presented for human review before finalization",
+        "Code includes appropriate metadata and links to source requirements",
+        "Approved code is automatically committed to the codebase with proper attribution"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "developer",
+      "epic": "Agentic Workflow",
+      "effort": "xl",
+      "business_value": "high",
+      "dependencies": ["PROP-005", "PROP-006"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Engineering Team"],
+      "tags": ["agentic", "code_generation", "implementation", "marvin", "automation"],
+      "notes": "Code generation should integrate with existing systems and follow established patterns.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-007-x7y8z9a0",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["code", "generate", "implementation", "agentic", "development", "automate", "best_practices", "standards"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 8,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-008",
+      "title": "Automated deployment pipeline",
+      "user_story": "As a DevOps engineer, I want the system to automatically deploy the implemented code through a CI/CD pipeline after it passes all tests, so that new features are consistently delivered with minimal manual intervention.",
+      "acceptance_criteria": [
+        "The system detects when code is ready for deployment (all tests passing, code reviewed)",
+        "Marvin agent coordinates the deployment process following predefined deployment patterns",
+        "The deployment pipeline includes build, test, staging, and production phases",
+        "Each deployment phase has appropriate validation gates and rollback mechanisms",
+        "Deployment automatically updates related documentation and project status",
+        "The system generates deployment reports with success metrics and any warnings",
+        "Deployed features are automatically monitored for performance and errors",
+        "The system updates the proposal, user story, and task statuses to reflect deployment completion"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "devops_engineer",
+      "epic": "Agentic Workflow",
+      "effort": "l",
+      "business_value": "high",
+      "dependencies": ["PROP-007"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["DevOps Team", "Engineering Team"],
+      "tags": ["deployment", "cicd", "automation", "pipeline", "release"],
+      "notes": "The deployment process should integrate with existing CI/CD systems.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-008-b1c2d3e4",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["deployment", "pipeline", "cicd", "automate", "release", "production", "staging", "monitor"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 8,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-009",
+      "title": "SentinelGaze UI for proposal workflow",
+      "user_story": "As a user, I want a cohesive, intuitive UI within SentinelGaze to manage and visualize the entire proposal workflow from idea to deployment, so that I can track progress, interact with the system, and understand the status of all items.",
+      "acceptance_criteria": [
+        "The UI provides a unified dashboard showing all proposals and their current status",
+        "Users can view and interact with items at each stage of the workflow (idea, proposal, user stories, PRD, tests, code, deployment)",
+        "The interface includes visual progress indicators and stage transitions",
+        "Users can drill down into details of any item with full metadata and links to related items",
+        "The UI supports filtering, sorting, and searching across all workflow items",
+        "The system provides notifications and alerts for important workflow events",
+        "The interface includes collaborative features (comments, approvals, assignments)",
+        "The UI reflects RBAC permissions, showing only content the user has access to view or modify"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "user",
+      "epic": "SentinelGaze Integration",
+      "effort": "xl",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Product Team", "UX Team", "Engineering Team"],
+      "tags": ["ui", "sentinelgaze", "dashboard", "workflow", "visualization"],
+      "notes": "This is a cross-cutting concern that enables interaction with all parts of the proposal workflow.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-009-f5g6h7i8",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["ui", "interface", "dashboard", "workflow", "visualize", "track", "sentinelgaze", "progress"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 8,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    },
+    {
+      "id": "PROP-010",
+      "title": "Marvin-guided workflow orchestration",
+      "user_story": "As a system administrator, I want Marvin to intelligently orchestrate the end-to-end proposal workflow, making decisions about transitions between stages, identifying issues, and guiding the process, so that the workflow proceeds efficiently with appropriate human oversight.",
+      "acceptance_criteria": [
+        "Marvin analyzes incoming ideas and proposals for completeness and quality",
+        "The system provides recommendations on which ideas should be promoted to proposals",
+        "Marvin identifies dependencies, gaps, and potential issues at each workflow stage",
+        "The system determines when outputs from one stage are ready to proceed to the next",
+        "Marvin provides explanations and reasoning for its decisions and recommendations",
+        "The system balances automation with appropriate human review and approval points",
+        "Workflow decisions incorporate feedback and learning from previous proposals",
+        "All Marvin orchestration actions are logged with clear rationale for auditability"
+      ],
+      "priority": "high",
+      "domain": "proposals_system",
+      "persona": "system_administrator",
+      "epic": "Marvin Integration",
+      "effort": "xl",
+      "business_value": "high",
+      "dependencies": ["PROP-001", "PROP-002", "PROP-004", "PROP-005", "PROP-006", "PROP-007", "PROP-008"],
+      "status": "proposed",
+      "implementation_phase": "mvp",
+      "stakeholders": ["Engineering Team", "Product Team"],
+      "tags": ["marvin", "orchestration", "workflow", "intelligence", "decision"],
+      "notes": "Marvin's role is to provide conscious oversight of the automated process while enabling human control.",
+      
+      "mem0": {
+        "embedding_id": "mem0-prop-010-j9k0l1m2",
+        "last_indexed": "2024-06-18T12:00:00Z",
+        "semantic_tokens": ["marvin", "orchestrate", "workflow", "intelligent", "decision", "guide", "conscious", "oversight"]
+      },
+      
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 8,
+        "last_updated": "2024-06-18T12:00:00Z"
+      },
+      
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2024-06-18T12:00:00Z",
+          "by": "sentinel-system"
+        }
+      }
+    }
+  ]
+} 

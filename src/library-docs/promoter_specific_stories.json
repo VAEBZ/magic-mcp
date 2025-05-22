@@ -1,0 +1,384 @@
+{
+  "title": "Promoter-Specific User Stories for VAEBZ Platform",
+  "description": "User stories focused on the needs of event promoters within the proposal workflow system",
+  "version": "1.0.0",
+  "created_at": "2024-05-30T09:15:30Z",
+  "updated_at": "2024-05-31T14:20:45Z",
+  "stories": [
+    {
+      "id": "promoter-story-001",
+      "title": "Promoter Idea Submission",
+      "description": "As a promoter, I want to submit feature ideas directly related to event promotion so that the platform better supports my marketing and audience development needs.",
+      "acceptance_criteria": [
+        "Promoters can submit ideas through the Ideas Board",
+        "Ideas can be tagged with 'promoter' category",
+        "Promoter-specific idea template is available",
+        "Event industry metrics can be referenced in the idea"
+      ],
+      "priority": "high",
+      "complexity": "low",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-002",
+      "title": "Promoter-Specific Analytics Requirements",
+      "description": "As a promoter, I want to define analytics requirements in proposals so that new features include the metrics I need to measure marketing effectiveness and ROI.",
+      "acceptance_criteria": [
+        "Promoters can add analytics requirements section to proposals",
+        "Predefined promoter metrics templates are available",
+        "Custom metrics can be specified",
+        "Analytics requirements are preserved through the PRD stage"
+      ],
+      "priority": "high",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-003",
+      "title": "Audience Targeting Specification",
+      "description": "As a promoter, I want to specify audience targeting capabilities in proposals so that new features help me reach the right potential attendees for my events.",
+      "acceptance_criteria": [
+        "Targeting parameters can be defined in proposals",
+        "Audience segment definitions are supported",
+        "Integration with existing marketing channels can be specified",
+        "Privacy and consent requirements are automatically included"
+      ],
+      "priority": "high",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-004",
+      "title": "Event Performance Metrics",
+      "description": "As a promoter, I want to include event performance metrics in proposals so that I can measure the impact of new features on ticket sales, attendance, and fan engagement.",
+      "acceptance_criteria": [
+        "Standard event performance metrics library is available",
+        "Custom metrics can be added",
+        "Baseline measurement methodology can be specified",
+        "Metrics are linked to business outcomes"
+      ],
+      "priority": "medium",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-005",
+      "title": "Partnership Integration Requirements",
+      "description": "As a promoter, I want to specify integration requirements with venue and artist systems in proposals so that new features work seamlessly with my partners' processes.",
+      "acceptance_criteria": [
+        "Standard API integration points can be selected",
+        "Custom integration requirements can be specified",
+        "Security and data sharing parameters are defined",
+        "Testing with partner systems is included in the workflow"
+      ],
+      "priority": "medium",
+      "complexity": "high",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-006",
+      "title": "Marketing Campaign Tools",
+      "description": "As a promoter, I want to include marketing campaign tool requirements in proposals so that new features support my promotional activities effectively.",
+      "acceptance_criteria": [
+        "Campaign creation workflows can be specified",
+        "Audience segmentation capabilities are defined",
+        "Creative asset management requirements are included",
+        "Campaign analytics and reporting needs are documented"
+      ],
+      "priority": "high",
+      "complexity": "high",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-007",
+      "title": "Beta Testing Phase Participation",
+      "description": "As a promoter, I want to participate in beta testing of new features from proposals I've contributed to so that I can provide feedback before full release.",
+      "acceptance_criteria": [
+        "Promoters who contributed to proposals are automatically invited to beta",
+        "Structured feedback mechanism is available during beta",
+        "Real event data can be used in testing (with appropriate safeguards)",
+        "Beta metrics are shared with participating promoters"
+      ],
+      "priority": "medium",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-008",
+      "title": "Custom UI Component Requests",
+      "description": "As a promoter, I want to request specific UI components in proposals so that the interface meets my workflow needs for event marketing.",
+      "acceptance_criteria": [
+        "UI component requests can be included in proposals",
+        "Mockups or sketches can be attached",
+        "Interaction specifications can be defined",
+        "Integration with existing promoter dashboard is considered"
+      ],
+      "priority": "medium",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-009",
+      "title": "A/B Testing Requirements",
+      "description": "As a promoter, I want to include A/B testing requirements in proposals so that I can optimize marketing approaches with data-driven decisions.",
+      "acceptance_criteria": [
+        "A/B test setup parameters can be specified",
+        "Success metrics for tests are defined",
+        "Statistical significance standards are included",
+        "Implementation of winning variants is streamlined"
+      ],
+      "priority": "medium",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-010",
+      "title": "ROI Calculation Models",
+      "description": "As a promoter, I want to define ROI calculation models in proposals so that I can demonstrate the business value of new features.",
+      "acceptance_criteria": [
+        "Standard ROI models are available for selection",
+        "Custom calculation components can be defined",
+        "Input data sources are specified",
+        "Visualization of ROI projections is included"
+      ],
+      "priority": "high",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "proposal_workflow",
+      "status": "approved",
+      "created_at": "2024-05-30T09:15:30Z",
+      "updated_at": "2024-05-30T09:15:30Z"
+    },
+    {
+      "id": "promoter-story-011",
+      "title": "Festival Planning Integration",
+      "description": "As a promoter, I want to include festival planning requirements in proposals so that the system supports the complexities of multi-day, multi-venue events.",
+      "acceptance_criteria": [
+        "Festival-specific planning templates are available",
+        "Multi-day scheduling features can be specified",
+        "Venue coordination capabilities are included",
+        "Artist lineup management features are defined"
+      ],
+      "priority": "high",
+      "complexity": "high",
+      "persona": "promoter",
+      "domain": "festival_management",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-012",
+      "title": "Festival Ticket Package Creation",
+      "description": "As a promoter, I want to define ticket package requirements for festivals so that I can offer multiple attendance options like single-day, multi-day, and VIP passes.",
+      "acceptance_criteria": [
+        "Festival ticket package configuration can be specified",
+        "Tiered pricing structures can be defined",
+        "Early bird and promotional discount parameters are included",
+        "Package comparison visualization requirements are supported"
+      ],
+      "priority": "high",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "festival_management",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-013",
+      "title": "Artist Lineup Management",
+      "description": "As a promoter, I want to include artist lineup management requirements in festival proposals so that I can efficiently coordinate multiple performers across stages and days.",
+      "acceptance_criteria": [
+        "Artist scheduling interface requirements can be specified",
+        "Stage assignment features are defined",
+        "Time slot management capabilities are included",
+        "Conflict detection requirements are supported"
+      ],
+      "priority": "high",
+      "complexity": "high",
+      "persona": "promoter",
+      "domain": "festival_management",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-014",
+      "title": "Festival-Specific Analytics",
+      "description": "As a promoter, I want to define festival-specific analytics requirements in proposals so that I can measure the performance of multi-day events and improve future festivals.",
+      "acceptance_criteria": [
+        "Day-by-day attendance comparison metrics are available",
+        "Stage popularity analysis can be specified",
+        "Artist performance correlation metrics are included",
+        "Year-over-year festival growth tracking is supported"
+      ],
+      "priority": "medium",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "festival_management",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-015",
+      "title": "Vendor Management for Festivals",
+      "description": "As a promoter, I want to specify vendor management requirements in festival proposals so that I can coordinate food, merchandise, and service providers at my events.",
+      "acceptance_criteria": [
+        "Vendor application and selection process can be defined",
+        "Vendor placement and map features are included",
+        "Revenue sharing agreement tracking is supported",
+        "Vendor performance metrics are available"
+      ],
+      "priority": "medium",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "festival_management",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-016",
+      "title": "Festival Promotion Campaigns",
+      "description": "As a promoter, I want to define festival-specific marketing campaign requirements in proposals so that I can effectively promote multi-day events to the right audiences.",
+      "acceptance_criteria": [
+        "Festival announcement campaign templates are available",
+        "Artist lineup reveal campaign features are included",
+        "Ticket tier release promotions are supported",
+        "Last-minute ticket push campaign capabilities are defined"
+      ],
+      "priority": "high",
+      "complexity": "high",
+      "persona": "promoter",
+      "domain": "festival_management",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-017",
+      "title": "Cross-Promotion with Artists",
+      "description": "As a promoter, I want to specify artist cross-promotion requirements in proposals so that I can leverage artist audiences for event marketing.",
+      "acceptance_criteria": [
+        "Artist social media integration points can be defined",
+        "Coordinated announcement timing features are included",
+        "Content sharing templates are available",
+        "Performance tracking across artist channels is supported"
+      ],
+      "priority": "high",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "event_promotion",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-018",
+      "title": "Event Series Management",
+      "description": "As a promoter, I want to include event series management requirements in proposals so that I can create and track recurring or themed events across multiple venues or dates.",
+      "acceptance_criteria": [
+        "Series creation and management features can be specified",
+        "Themed branding consistency tools are defined",
+        "Cross-event analytics are supported",
+        "Series ticket bundling capabilities are included"
+      ],
+      "priority": "medium",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "event_promotion",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-019",
+      "title": "Local Market Targeting",
+      "description": "As a promoter, I want to specify local market targeting requirements in proposals so that I can effectively promote events to specific geographic communities.",
+      "acceptance_criteria": [
+        "Geo-targeted promotion parameters can be defined",
+        "Local media integration points are included",
+        "Community partnership features are supported",
+        "Local business cross-promotion capabilities are specified"
+      ],
+      "priority": "high",
+      "complexity": "medium",
+      "persona": "promoter",
+      "domain": "event_promotion",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    },
+    {
+      "id": "promoter-story-020",
+      "title": "Fan Engagement for Events",
+      "description": "As a promoter, I want to define fan engagement requirements in proposals so that I can create interactive experiences before, during, and after events.",
+      "acceptance_criteria": [
+        "Pre-event engagement feature specifications are supported",
+        "Live event interaction capabilities can be defined",
+        "Post-event follow-up mechanisms are included",
+        "Fan-generated content integration points are specified"
+      ],
+      "priority": "medium",
+      "complexity": "high",
+      "persona": "promoter",
+      "domain": "event_promotion",
+      "status": "approved",
+      "created_at": "2024-05-31T14:20:45Z",
+      "updated_at": "2024-05-31T14:20:45Z"
+    }
+  ],
+  "related_docs": [
+    {
+      "title": "Proposal Workflow System",
+      "path": "/docs/user_stories/proposal_workflow_system.md"
+    },
+    {
+      "title": "Promoter Specific Workflow Diagram",
+      "path": "/docs/diagrams/promoter_specific_workflow.mmd"
+    },
+    {
+      "title": "Festival Management Technical Requirements",
+      "path": "/docs/technical/festival_management_requirements.md"
+    }
+  ],
+  "tags": ["promoter", "event-marketing", "proposal-workflow", "analytics", "user-stories", "festival-management", "event-promotion"]
+} 

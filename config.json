@@ -1,0 +1,36 @@
+{
+  "name": "magic-mcp",
+  "version": "1.0.0",
+  "description": "Magic MCP UI builder for MAGRATHEAN",
+  "api": {
+    "baseUrl": "https://api-dev.vaebz.com/mcp/magic",
+    "version": "v1"
+  },
+  "server": {
+    "port": 9628,
+    "host": "0.0.0.0"
+  },
+  "storage": {
+    "type": "s3",
+    "bucket": "magrathean-magic-mcp-${stage}",
+    "region": "eu-west-1"
+  },
+  "components": {
+    "basePath": "./components",
+    "outputPath": "./dist/components",
+    "templatePath": "./templates"
+  },
+  "preview": {
+    "port": 9629,
+    "host": "0.0.0.0",
+    "enabled": true
+  },
+  "security": {
+    "apiKey": "${env:MAGIC_API_KEY}",
+    "allowedOrigins": [
+      "https://api-dev.vaebz.com",
+      "https://api-staging.vaebz.com",
+      "https://api.vaebz.com"
+    ]
+  }
+} 

@@ -1,0 +1,192 @@
+service: magic-mcp
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+  environment:
+    STAGE: ${self:provider.stage}
+    STORAGE_BUCKET: magicmcp-${self:provider.stage}-${self:provider.region}-storage
+    BUCKET_NAME: magicmcp-components-${opt:stage, 'dev'}
+    HTTP_PORT: '9628'
+    LAMBDA_PORT: '9629'
+    WEBSOCKET_PORT: '9630'
+    NODE_ENV: ${opt:env, 'development'}
+    IS_OFFLINE: ${opt:offline, 'false'}
+    CONNECTIONS_TABLE: magic-mcp-${self:provider.stage}-${self:provider.region}-connections
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+            - s3:DeleteObject
+            - s3:ListBucket
+          Resource:
+            - arn:aws:s3:::${self:provider.environment.STORAGE_BUCKET}
+            - arn:aws:s3:::${self:provider.environment.STORAGE_BUCKET}/*
+            - arn:aws:s3:::${self:provider.environment.BUCKET_NAME}/*
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:DeleteItem
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:UpdateItem
+          Resource:
+            - Fn::GetAtt: [ConnectionsTable, Arn]
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CONNECTIONS_TABLE}
+            - arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CONNECTIONS_TABLE}/index/*
+        - Effect: Allow
+          Action:
+            - execute-api:ManageConnections
+          Resource:
+            Fn::Sub:
+              - arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${apiId}/${self:provider.stage}/POST/@connections/*
+              - apiId:
+                  Ref: WebsocketsApi
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource:
+            - Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/magic-mcp-${self:provider.stage}-*:*\n
+        - Effect: Allow
+          Action:
+            - events:PutRule
+            - events:PutTargets
+            - events:DeleteRule
+            - events:RemoveTargets
+          Resource: "*"
+
+functions:
+  api:
+    handler: dist/index.handler
+    events:
+      - http:
+          path: /magic/health
+          method: get
+          cors: true
+      - http:
+          path: /magic/components
+          method: any
+          cors: true
+      - http:
+          path: /magic/components/{id}
+          method: any
+          cors: true
+      - http:
+          path: /magic/preview
+          method: post
+          cors: true
+  
+  websocketConnect:
+    handler: dist/index.webSocketConnectHandler
+    events:
+      - websocket:
+          route: $connect
+  
+  websocketDisconnect:
+    handler: dist/index.webSocketDisconnectHandler
+    events:
+      - websocket:
+          route: $disconnect
+  
+  websocketDefault:
+    handler: dist/index.webSocketDefaultHandler
+    events:
+      - websocket:
+          route: $default
+
+resources:
+  Resources:
+    storageBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: magicmcp-${self:provider.stage}-${self:provider.region}-storage
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+              AllowedOrigins:
+                - '*'
+              MaxAge: 3000
+    
+    ComponentsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.BUCKET_NAME}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders: ['*']
+              AllowedMethods: [GET, PUT, POST, DELETE, HEAD]
+              AllowedOrigins: ['*']
+              MaxAge: 3000
+        VersioningConfiguration:
+          Status: Enabled
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+    
+    ConnectionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CONNECTIONS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: connectionId
+            AttributeType: S
+          - AttributeName: clientContext
+            AttributeType: S
+        KeySchema:
+          - AttributeName: connectionId
+            KeyType: HASH
+          - AttributeName: clientContext
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: ClientContextIndex
+            KeySchema:
+              - AttributeName: clientContext
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+        SSESpecification:
+          SSEEnabled: true
+        TimeToLiveSpecification:
+          AttributeName: ttl
+          Enabled: true
+
+    WebsocketsApi:
+      Type: AWS::ApiGatewayV2::Api
+      Properties:
+        Name: magicmcp-${self:provider.stage}-events
+        ProtocolType: WEBSOCKET
+        RouteSelectionExpression: "$request.body.action"
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  webpack:
+    webpackConfig: webpack.config.js
+    includeModules: true
+    packager: npm
+  serverless-offline:
+    httpPort: ${self:provider.environment.HTTP_PORT}
+    lambdaPort: ${self:provider.environment.LAMBDA_PORT}
+    websocketPort: ${self:provider.environment.WEBSOCKET_PORT}
+    useChildProcesses: true 

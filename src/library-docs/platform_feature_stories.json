@@ -1,0 +1,1062 @@
+{
+  "metadata": {
+    "schema_version": "2.0",
+    "tenant_id": "vaebz-platform",
+    "last_updated": "2025-05-13T02:52:40.270Z",
+    "domain": "platform_feature",
+    "team": "Product Team",
+    "tags": [
+      "platform_feature",
+      "venue",
+      "manager",
+      "customizable",
+      "growth",
+      "small",
+      "operator",
+      "booking",
+      "operations",
+      "hospitality",
+      "accessibility",
+      "coordinator",
+      "staff",
+      "norway_expansion",
+      "marketing",
+      "director",
+      "inventory",
+      "security",
+      "customer",
+      "service",
+      "nordic_expansion",
+      "business",
+      "development",
+      "forward",
+      "thinking",
+      "global_expansion",
+      "embracing",
+      "entry",
+      "seeking"
+    ]
+  },
+  "user_stories": [
+    {
+      "id": "VE-001",
+      "title": "A customizable venue profile with rich media ca...",
+      "user_story": "As a venue manager, I want a customizable venue profile with rich media capabilities, so I can effectively showcase my space to potential artists and audiences.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Iceland Growth",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "growth",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "manager",
+        "customizable",
+        "growth"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-001-9b69eb7c",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "manager",
+          "customizable",
+          "profile",
+          "media"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-002",
+      "title": "Calendar and event management tools",
+      "user_story": "As a small venue operator, I want calendar and event management tools, so I can efficiently plan and visualize my programming schedule.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Iceland Growth",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "growth",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "small",
+        "operator",
+        "growth"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-002-7ea703bc",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "small",
+          "venue",
+          "operator",
+          "calendar",
+          "event"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-003",
+      "title": "Streamlined booking request handling",
+      "user_story": "As a venue booking manager, I want streamlined booking request handling, so I can efficiently manage and respond to performance inquiries.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Iceland Growth",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "growth",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "booking",
+        "manager",
+        "growth"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-003-bea20cc5",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "booking",
+          "venue",
+          "manager",
+          "streamlined",
+          "request"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-005",
+      "title": "Seating and space configuration tools",
+      "user_story": "As a venue operations manager, I want seating and space configuration tools, so I can visualize and adjust my venue layout for different types of events.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Iceland Growth",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "growth",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "operations",
+        "manager",
+        "growth"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-005-111e6bb8",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "operations",
+          "manager",
+          "seating",
+          "space"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-008",
+      "title": "Food and beverage planning tools",
+      "user_story": "As a venue hospitality manager, I want food and beverage planning tools, so I can optimize offerings based on event type and audience preferences.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Iceland Growth",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "growth",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "hospitality",
+        "manager",
+        "growth"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-008-69aea251",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "hospitality",
+          "manager",
+          "beverage",
+          "planning"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-011",
+      "title": "Accessibility assessment tools",
+      "user_story": "As a venue accessibility coordinator, I want accessibility assessment tools, so I can ensure my venue meets or exceeds standards for all attendees.",
+      "acceptance_criteria": [],
+      "priority": "low",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Iceland Growth",
+      "effort": "s",
+      "business_value": "low",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "growth",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "accessibility",
+        "coordinator",
+        "growth"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-011-d1f9e9b4",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "accessibility",
+          "coordinator",
+          "assessment",
+          "tools"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-013",
+      "title": "Shift scheduling and management tools",
+      "user_story": "As a venue staff manager, I want shift scheduling and management tools, so I can efficiently coordinate staff for different types of events and occupancy levels.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Norway Expansion",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "norway_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "staff",
+        "manager",
+        "norway_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-013-17a4487b",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "staff",
+          "venue",
+          "manager",
+          "shift",
+          "scheduling"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-016",
+      "title": "Audience segmentation and targeted marketing tools",
+      "user_story": "As a venue marketing director, I want audience segmentation and targeted marketing tools, so I can personalize communication and promotions based on patron preferences.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Norway Expansion",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "norway_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "marketing",
+        "director",
+        "norway_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-016-7721898a",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "marketing",
+          "venue",
+          "director",
+          "audience",
+          "segmentation"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-017",
+      "title": "F&B inventory and sales tracking",
+      "user_story": "As a venue bar manager, I want F&B inventory and sales tracking, so I can optimize ordering and staffing based on event-specific consumption patterns.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Norway Expansion",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "norway_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "manager",
+        "inventory",
+        "norway_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-017-94cb536f",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "manager",
+          "inventory",
+          "sales",
+          "tracking"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-018",
+      "title": "Staff management tools with role-based scheduling",
+      "user_story": "As a venue operations manager, I want staff management tools with role-based scheduling, so I can ensure appropriate coverage for all event types.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Norway Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "norway_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "operations",
+        "manager",
+        "norway_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-018-216c054a",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "operations",
+          "manager",
+          "staff",
+          "management"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-019",
+      "title": "Incident reporting and management tools",
+      "user_story": "As a venue security manager, I want incident reporting and management tools, so I can track, respond to, and analyze security issues to improve venue safety.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Norway Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "norway_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "security",
+        "manager",
+        "norway_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-019-4a2f97db",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "security",
+          "manager",
+          "incident",
+          "reporting"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-020",
+      "title": "Patron communication tools with templated respo...",
+      "user_story": "As a venue customer service manager, I want patron communication tools with templated responses, so I can efficiently handle customer inquiries and issues.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Norway Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "norway_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "customer",
+        "service",
+        "norway_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-020-1f7fde8f",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "customer",
+          "venue",
+          "service",
+          "manager",
+          "patron"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-022",
+      "title": "Contract generation and management tools",
+      "user_story": "As a venue booking manager, I want contract generation and management tools, so I can streamline the legal aspects of artist bookings.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Nordic Expansion",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "nordic_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "booking",
+        "manager",
+        "nordic_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-022-a9c29805",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "booking",
+          "manager",
+          "contract",
+          "generation"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-026",
+      "title": "Partnership and sponsorship management tools",
+      "user_story": "As a venue business development manager, I want partnership and sponsorship management tools, so I can secure, track, and fulfill corporate relationships.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Nordic Expansion",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "nordic_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "business",
+        "development",
+        "nordic_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-026-dca4dcb8",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "business",
+          "development",
+          "manager",
+          "partnership"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-027",
+      "title": "Comprehensive accessibility features for patron...",
+      "user_story": "As a venue accessibility manager, I want comprehensive accessibility features for patrons with disabilities, so I can ensure my venue is inclusive and compliant with regulations.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Nordic Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "nordic_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "accessibility",
+        "manager",
+        "nordic_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-027-e5547eb7",
+        "last_indexed": "2025-05-13T02:52:40.269Z",
+        "semantic_tokens": [
+          "venue",
+          "accessibility",
+          "manager",
+          "comprehensive",
+          "features"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.269Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.269Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-030",
+      "title": "Menu engineering tools based on event demographics",
+      "user_story": "As a venue food service manager, I want menu engineering tools based on event demographics, so I can optimize food offerings and pricing for different audience segments.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Nordic Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "nordic_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "service",
+        "manager",
+        "nordic_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-030-2d25974a",
+        "last_indexed": "2025-05-13T02:52:40.270Z",
+        "semantic_tokens": [
+          "venue",
+          "service",
+          "manager",
+          "engineering",
+          "tools"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.270Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.270Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-032",
+      "title": "Augmented reality venue experiences",
+      "user_story": "As a forward-thinking venue operator, I want augmented reality venue experiences, so I can offer enhanced interactive elements to patrons before, during, and after events.",
+      "acceptance_criteria": [],
+      "priority": "high",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Global Expansion",
+      "effort": "s",
+      "business_value": "high",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "global_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "forward",
+        "thinking",
+        "global_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-032-eaf8d27b",
+        "last_indexed": "2025-05-13T02:52:40.270Z",
+        "semantic_tokens": [
+          "venue",
+          "forward",
+          "thinking",
+          "operator",
+          "augmented"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.270Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.270Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-036",
+      "title": "Integrated physical/digital event management",
+      "user_story": "As a venue manager embracing hybrid events, I want integrated physical/digital event management, so I can create cohesive experiences that blend in-person and online elements.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Global Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "global_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "manager",
+        "embracing",
+        "global_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-036-948f8a45",
+        "last_indexed": "2025-05-13T02:52:40.270Z",
+        "semantic_tokens": [
+          "venue",
+          "manager",
+          "embracing",
+          "hybrid",
+          "events"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.270Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.270Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-038",
+      "title": "Queue management and entry optimization",
+      "user_story": "As a venue operator in peak seasons, I want queue management and entry optimization, so I can improve the patron experience during high-volume entry periods.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Global Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "global_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "entry",
+        "operator",
+        "global_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-038-8230f5bb",
+        "last_indexed": "2025-05-13T02:52:40.270Z",
+        "semantic_tokens": [
+          "entry",
+          "venue",
+          "operator",
+          "seasons",
+          "queue"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.270Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.270Z",
+          "by": "ingestion-script"
+        }
+      }
+    },
+    {
+      "id": "VE-039",
+      "title": "Non-music event planning tools",
+      "user_story": "As a venue manager seeking diversification, I want non-music event planning tools, so I can expand my venue's usage for conferences, private events, and other non-concert activities.",
+      "acceptance_criteria": [],
+      "priority": "medium",
+      "domain": "platform_feature",
+      "persona": "venue",
+      "epic": "Global Expansion",
+      "effort": "s",
+      "business_value": "medium",
+      "dependencies": [],
+      "status": "proposed",
+      "implementation_phase": "global_expansion",
+      "stakeholders": [
+        "Business Development Team"
+      ],
+      "tags": [
+        "platform_feature",
+        "venue",
+        "manager",
+        "seeking",
+        "global_expansion"
+      ],
+      "notes": "",
+      "mem0": {
+        "embedding_id": "mem0-ve-039-acd878f3",
+        "last_indexed": "2025-05-13T02:52:40.270Z",
+        "semantic_tokens": [
+          "venue",
+          "manager",
+          "seeking",
+          "diversification",
+          "music"
+        ]
+      },
+      "mcp": {
+        "task_ids": [],
+        "implementation_status": "not_started",
+        "percent_complete": 0,
+        "todos_complete": 0,
+        "todos_total": 0,
+        "last_updated": "2025-05-13T02:52:40.270Z"
+      },
+      "lifecycle": {
+        "proposed": {
+          "timestamp": "2025-05-13T02:52:40.270Z",
+          "by": "ingestion-script"
+        }
+      }
+    }
+  ]
+}

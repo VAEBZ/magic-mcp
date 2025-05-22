@@ -1,0 +1,350 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VAEBZ Proposal Schema",
+  "description": "A schema for standardizing proposals in the VAEBZ platform",
+  "type": "object",
+  "required": ["id", "title", "description", "type", "status", "owner", "priority", "domain"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the proposal"
+    },
+    "title": {
+      "type": "string",
+      "description": "Brief title summarizing the proposal"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short summary of the proposal's purpose and benefits"
+    },
+    "content": {
+      "type": "string",
+      "description": "Full content of the proposal in Markdown format"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["feature", "fix", "doc", "enhancement", "refactor"],
+      "description": "The type of proposal"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "submitted", "active", "review", "approved", "rejected", "complete"],
+      "description": "Current status of the proposal"
+    },
+    "workflow_stage": {
+      "type": "string",
+      "enum": ["idea", "proposal", "stories", "prd", "tests", "code", "deploy"],
+      "description": "Current stage in the workflow pipeline"
+    },
+    "owner": {
+      "type": "object",
+      "description": "The person responsible for the proposal",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "User ID of the owner"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the owner"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email of the owner"
+        }
+      }
+    },
+    "contributors": {
+      "type": "array",
+      "description": "List of people who contributed to the proposal",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID of the contributor"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the contributor"
+          },
+          "role": {
+            "type": "string",
+            "description": "Role of the contributor in this proposal"
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the proposal was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the proposal was last updated"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "The priority level of the proposal"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The functional domain or category the proposal belongs to"
+    },
+    "complexity": {
+      "type": "string",
+      "enum": ["xs", "s", "m", "l", "xl"],
+      "description": "Estimated level of complexity to implement"
+    },
+    "implementation_phase": {
+      "type": "string",
+      "enum": [
+        "prototype",
+        "mvp",
+        "post_mvp",
+        "iceland_launch",
+        "norway_expansion",
+        "nordic_expansion",
+        "global_expansion"
+      ],
+      "description": "The phase of development when this proposal should be implemented"
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "IDs of proposals that must be completed before this one",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stakeholders": {
+      "type": "array",
+      "description": "Teams or individuals responsible for or affected by this proposal",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "List of tags for categorization and searching",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rbac_requirements": {
+      "type": "object",
+      "description": "Access control requirements for this proposal",
+      "properties": {
+        "sensitivity": {
+          "type": "string",
+          "enum": ["public", "internal", "confidential", "restricted"],
+          "description": "Sensitivity level of the proposal"
+        },
+        "roles": {
+          "type": "array",
+          "description": "Roles that have access to this proposal",
+          "items": {
+            "type": "string"
+          }
+        },
+        "teams": {
+          "type": "array",
+          "description": "Teams that have access to this proposal",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "related_artifacts": {
+      "type": "array",
+      "description": "Artifacts associated with this proposal",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "title"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the artifact"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["user_story", "prd", "test", "code", "document", "diagram"],
+            "description": "Type of artifact"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the artifact"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL or path to the artifact"
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the artifact"
+          }
+        }
+      }
+    },
+    "progress": {
+      "type": "object",
+      "description": "Current progress through the workflow",
+      "properties": {
+        "current_value": {
+          "type": "integer",
+          "description": "Current progress value"
+        },
+        "max_value": {
+          "type": "integer",
+          "description": "Maximum progress value"
+        },
+        "percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of completion"
+        },
+        "stages_completed": {
+          "type": "array",
+          "description": "List of completed workflow stages",
+          "items": {
+            "type": "string",
+            "enum": ["idea", "proposal", "stories", "prd", "tests", "code", "deploy"]
+          }
+        }
+      }
+    },
+    "activity_log": {
+      "type": "array",
+      "description": "Log of activities related to this proposal",
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "type", "description"],
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the activity occurred"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["user", "system", "marvin"],
+            "description": "The type of actor that performed the activity"
+          },
+          "actor": {
+            "type": "string",
+            "description": "Who or what performed the activity"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the activity"
+          },
+          "details": {
+            "type": "string",
+            "description": "Additional details about the activity"
+          }
+        }
+      }
+    },
+    "mem0": {
+      "type": "object",
+      "description": "MEM0 integration for vector retrieval",
+      "properties": {
+        "embedding_id": {
+          "type": "string",
+          "description": "ID of the embedding in MEM0"
+        },
+        "last_indexed": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the proposal was last indexed in MEM0"
+        },
+        "semantic_tokens": {
+          "type": "array",
+          "description": "Semantic tokens for search and retrieval",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "mcp": {
+      "type": "object",
+      "description": "MCP integration for task tracking",
+      "properties": {
+        "task_ids": {
+          "type": "array",
+          "description": "Related task IDs in MCP",
+          "items": {
+            "type": "string"
+          }
+        },
+        "implementation_status": {
+          "type": "string",
+          "enum": ["not_started", "in_progress", "completed", "blocked"],
+          "description": "Current implementation status"
+        },
+        "percent_complete": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of completion in MCP"
+        },
+        "todos_complete": {
+          "type": "integer",
+          "description": "Number of completed todos"
+        },
+        "todos_total": {
+          "type": "integer",
+          "description": "Total number of todos"
+        }
+      }
+    },
+    "marvin_insights": {
+      "type": "object",
+      "description": "Insights and recommendations from Marvin",
+      "properties": {
+        "quality_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Quality score assessed by Marvin"
+        },
+        "completeness_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Completeness score assessed by Marvin"
+        },
+        "recommendations": {
+          "type": "array",
+          "description": "Recommendations from Marvin",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cosmic_significance": {
+          "type": "integer",
+          "description": "On Marvin's scale of cosmic significance (1-42, where 42 is the ultimate answer)",
+          "minimum": 1,
+          "maximum": 42
+        }
+      }
+    },
+    "frontmatter": {
+      "type": "object",
+      "description": "Original YAML frontmatter for the proposal document",
+      "additionalProperties": true
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes, context, or explanations"
+    }
+  }
+} 

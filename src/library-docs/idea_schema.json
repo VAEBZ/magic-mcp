@@ -1,0 +1,255 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VAEBZ Idea Schema",
+  "description": "A schema for lightweight idea collection in the VAEBZ proposal workflow system",
+  "type": "object",
+  "required": ["id", "title", "description", "creator"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the idea"
+    },
+    "title": {
+      "type": "string",
+      "description": "Brief title summarizing the idea"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description explaining the idea"
+    },
+    "benefits": {
+      "type": "string",
+      "description": "Expected benefits or impact of implementing this idea"
+    },
+    "creator": {
+      "type": "object",
+      "description": "The person who submitted the idea",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "User ID of the creator"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the creator"
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the idea was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the idea was last updated"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The functional domain or category the idea belongs to"
+    },
+    "tags": {
+      "type": "array",
+      "description": "List of tags for categorization",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "submitted", "under_review", "promoted", "rejected", "archived"],
+      "description": "Current status of the idea"
+    },
+    "votes": {
+      "type": "object",
+      "description": "Voting statistics for the idea",
+      "properties": {
+        "upvotes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of upvotes"
+        },
+        "downvotes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of downvotes"
+        },
+        "score": {
+          "type": "integer",
+          "description": "Overall vote score (can be negative)"
+        },
+        "voters": {
+          "type": "array",
+          "description": "List of users who voted",
+          "items": {
+            "type": "object",
+            "required": ["id", "vote"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "User ID"
+              },
+              "vote": {
+                "type": "integer",
+                "enum": [-1, 1],
+                "description": "Vote value: 1 for upvote, -1 for downvote"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When the vote was cast"
+              }
+            }
+          }
+        }
+      }
+    },
+    "comments": {
+      "type": "array",
+      "description": "Comments on the idea",
+      "items": {
+        "type": "object",
+        "required": ["id", "author", "content", "timestamp"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the comment"
+          },
+          "author": {
+            "type": "object",
+            "required": ["id", "name"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "User ID of the author"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the author"
+              }
+            }
+          },
+          "content": {
+            "type": "string",
+            "description": "Comment text"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the comment was created"
+          },
+          "parent_id": {
+            "type": "string",
+            "description": "ID of the parent comment (for replies)"
+          }
+        }
+      }
+    },
+    "related_ideas": {
+      "type": "array",
+      "description": "IDs of related ideas",
+      "items": {
+        "type": "string"
+      }
+    },
+    "promoted_to_proposal": {
+      "type": "object",
+      "description": "Information about promotion to a formal proposal",
+      "properties": {
+        "is_promoted": {
+          "type": "boolean",
+          "description": "Whether the idea has been promoted to a proposal"
+        },
+        "proposal_id": {
+          "type": "string",
+          "description": "ID of the resulting proposal (if promoted)"
+        },
+        "promoted_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the idea was promoted"
+        },
+        "promoted_by": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "User ID of who promoted the idea"
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of who promoted the idea"
+            }
+          }
+        }
+      }
+    },
+    "marvin_analysis": {
+      "type": "object",
+      "description": "Marvin's analysis of the idea",
+      "properties": {
+        "recommendation": {
+          "type": "string",
+          "enum": ["promote", "merge", "refine", "reject"],
+          "description": "Marvin's recommendation for this idea"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence level in the recommendation"
+        },
+        "reasoning": {
+          "type": "string",
+          "description": "Marvin's reasoning for the recommendation"
+        },
+        "suggested_improvements": {
+          "type": "array",
+          "description": "Suggested improvements before promotion",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cosmic_significance": {
+          "type": "integer",
+          "description": "On Marvin's scale of cosmic significance (1-42, where 42 is the ultimate answer)",
+          "minimum": 1,
+          "maximum": 42
+        }
+      }
+    },
+    "mem0": {
+      "type": "object",
+      "description": "MEM0 integration for vector retrieval",
+      "properties": {
+        "embedding_id": {
+          "type": "string",
+          "description": "ID of the embedding in MEM0"
+        },
+        "last_indexed": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the idea was last indexed in MEM0"
+        },
+        "semantic_tokens": {
+          "type": "array",
+          "description": "Semantic tokens for search and retrieval",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["public", "team", "private"],
+      "description": "Visibility level of the idea"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or context"
+    }
+  }
+} 

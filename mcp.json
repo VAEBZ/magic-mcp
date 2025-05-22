@@ -1,0 +1,379 @@
+{
+  "name": "magic-mcp",
+  "description": "Magic Component Platform - Serverless API for managing UI components and real-time updates",
+  "version": "1.0.0",
+  "type": "serverless",
+  "framework": "serverless",
+  "runtime": "nodejs20.x",
+  "region": "eu-west-1",
+  "stage": "dev",
+  "environment": {
+    "STAGE": "dev",
+    "STORAGE_BUCKET": "magic-mcp-dev-storage-magic-mcp",
+    "HTTP_PORT": "9628",
+    "LAMBDA_PORT": "9629",
+    "WEBSOCKET_PORT": "9630",
+    "NODE_ENV": "development",
+    "IS_OFFLINE": "false",
+    "CONNECTIONS_TABLE": "magic-mcp-dev-connections"
+  },
+  "api": {
+    "baseUrl": "https://fbatxsayf3.execute-api.eu-west-1.amazonaws.com/dev/magic",
+    "localUrl": "http://localhost:9628/magic",
+    "headers": {
+      "x-api-key": "sPbwaiip4j5DLiEiz1K2J86vHDB2whHP4hHlTztQ",
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    }
+  },
+  "webSocketApi": {
+    "description": "WebSocket API for real-time component updates (SSE-like functionality).",
+    "url": "wss://YOUR_WEBSOCKET_API_ID.execute-api.eu-west-1.amazonaws.com/dev",
+    "localUrl": "ws://localhost:9630",
+    "routes": {
+      "$connect": {
+        "description": "Handles new client connections. Stores connection ID."
+      },
+      "$disconnect": {
+        "description": "Handles client disconnections. Removes connection ID."
+      },
+      "$default": {
+        "description": "Default message handler (can be used for client-to-server messages if needed)."
+      },
+      "sendEvent": {
+        "description": "(Internal) Backend uses this to push messages to connected clients. Clients do not call this directly."
+      }
+    },
+    "messageFormat": {
+      "notes": "Server will send messages formatted like SSE events (e.g., 'event: componentUpdate\ndata: { ... }\n\n').",
+      "exampleServerToClient": {
+        "event": "componentUpdate",
+        "data": {
+          "action": "create | update | delete",
+          "component": {
+            "$ref": "#/definitions/Component"
+          }
+        }
+      }
+    }
+  },
+  "endpoints": {
+    "health": {
+      "path": "/health",
+      "method": "GET",
+      "description": "Health check endpoint",
+      "response": {
+        "status": "ok",
+        "version": "1.0.0"
+      }
+    },
+    "components": {
+      "list": {
+        "path": "/components",
+        "method": "GET",
+        "description": "List all components",
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Component"
+          }
+        }
+      },
+      "create": {
+        "path": "/components",
+        "method": "POST",
+        "description": "Create a new component",
+        "request": {
+          "type": "object",
+          "required": ["type", "content"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["button", "input", "card", "container"]
+            },
+            "content": {
+              "type": "object",
+              "properties": {
+                "$ref": "#/definitions/ComponentContent"
+              }
+            }
+          }
+        },
+        "response": {
+          "$ref": "#/definitions/Component"
+        }
+      },
+      "get": {
+        "path": "/components/{id}",
+        "method": "GET",
+        "description": "Get a component by ID",
+        "parameters": {
+          "id": {
+            "type": "string",
+            "description": "Component ID"
+          }
+        },
+        "response": {
+          "$ref": "#/definitions/Component"
+        }
+      },
+      "update": {
+        "path": "/components/{id}",
+        "method": "PUT",
+        "description": "Update a component",
+        "parameters": {
+          "id": {
+            "type": "string",
+            "description": "Component ID"
+          }
+        },
+        "request": {
+          "type": "object",
+          "required": ["content"],
+          "properties": {
+            "content": {
+              "type": "object",
+              "properties": {
+                "$ref": "#/definitions/ComponentContent"
+              }
+            }
+          }
+        },
+        "response": {
+          "$ref": "#/definitions/Component"
+        }
+      },
+      "delete": {
+        "path": "/components/{id}",
+        "method": "DELETE",
+        "description": "Delete a component",
+        "parameters": {
+          "id": {
+            "type": "string",
+            "description": "Component ID"
+          }
+        },
+        "response": {
+          "type": "null"
+        }
+      }
+    },
+    "preview": {
+      "path": "/preview",
+      "method": "POST",
+      "description": "Generate a preview for components",
+      "request": {
+        "type": "object",
+        "required": ["components"],
+        "properties": {
+          "components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Component"
+            }
+          }
+        }
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "preview": {
+            "type": "string",
+            "description": "HTML preview of the components"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Component": {
+      "type": "object",
+      "required": ["id", "type", "content", "createdAt", "updatedAt"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique component identifier"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["button", "input", "card", "container"],
+          "description": "Component type"
+        },
+        "content": {
+          "$ref": "#/definitions/ComponentContent"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp"
+        }
+      }
+    },
+    "ComponentContent": {
+      "type": "object",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ButtonContent"
+        },
+        {
+          "$ref": "#/definitions/InputContent"
+        },
+        {
+          "$ref": "#/definitions/CardContent"
+        },
+        {
+          "$ref": "#/definitions/ContainerContent"
+        }
+      ]
+    },
+    "ButtonContent": {
+      "type": "object",
+      "required": ["label", "action"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Button text"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action identifier"
+        },
+        "style": {
+          "type": "string",
+          "enum": ["primary", "secondary", "danger", "success"],
+          "description": "Button style"
+        },
+        "size": {
+          "type": "string",
+          "enum": ["small", "medium", "large"],
+          "description": "Button size"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether the button is disabled"
+        }
+      }
+    },
+    "InputContent": {
+      "type": "object",
+      "required": ["type", "name"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["text", "email", "password", "number", "tel", "url"],
+          "description": "Input type"
+        },
+        "name": {
+          "type": "string",
+          "description": "Input name"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text"
+        },
+        "value": {
+          "type": "string",
+          "description": "Default value"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Whether the input is required"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether the input is disabled"
+        }
+      }
+    },
+    "CardContent": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Card title"
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Card subtitle"
+        },
+        "content": {
+          "type": "string",
+          "description": "Card content"
+        },
+        "image": {
+          "type": "string",
+          "format": "uri",
+          "description": "Card image URL"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ButtonContent"
+          },
+          "description": "Card action buttons"
+        }
+      }
+    },
+    "ContainerContent": {
+      "type": "object",
+      "required": ["children"],
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Component"
+          },
+          "description": "Child components"
+        },
+        "style": {
+          "type": "object",
+          "description": "Container style properties"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["vertical", "horizontal", "grid"],
+          "description": "Container layout type"
+        }
+      }
+    }
+  },
+  "cursor": {
+    "mcpServers": {
+      "magic-mcp": {
+        "transport": "http",
+        "url": "https://fbatxsayf3.execute-api.eu-west-1.amazonaws.com/dev/magic",
+        "headers": {
+          "x-api-key": "sPbwaiip4j5DLiEiz1K2J86vHDB2whHP4hHlTztQ",
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        "description": "Magic Component Platform - Component Management Service (HTTP)"
+      },
+      "magic-mcp-local": {
+        "transport": "http",
+        "url": "http://localhost:9628/magic",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        "description": "Magic Component Platform - Local Development (HTTP)"
+      },
+      "magic-mcp-events": {
+        "transport": "websocket",
+        "url": "wss://YOUR_WEBSOCKET_API_ID.execute-api.eu-west-1.amazonaws.com/dev",
+        "description": "Magic Component Platform - Real-time Events (WebSocket for SSE-like updates)"
+      },
+      "magic-mcp-events-local": {
+        "transport": "websocket",
+        "url": "ws://localhost:9630",
+        "description": "Magic Component Platform - Local Real-time Events (WebSocket for SSE-like updates)"
+      }
+    }
+  }
+} 

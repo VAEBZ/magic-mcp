@@ -10,7 +10,11 @@ yarn-error.log
 
 # Build output
 dist/
-build/
+.build/
+.esbuild/
+
+# Serverless
+.serverless/
 
 # Environment variables
 .env

@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VAEBZ User Story Schema",
+  "description": "A schema for standardizing user stories in the VAEBZ platform",
+  "type": "object",
+  "required": ["id", "title", "user_story", "acceptance_criteria", "priority", "domain", "persona"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the user story"
+    },
+    "title": {
+      "type": "string",
+      "description": "Brief title summarizing the user story"
+    },
+    "user_story": {
+      "type": "string",
+      "description": "The user story in 'As a [persona], I want [feature/action], so that [benefit/value]' format"
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "description": "List of criteria that must be met for the story to be considered complete",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "The priority level of the user story"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The functional domain or category the user story belongs to",
+      "enum": [
+        "artist_profile",
+        "event_discovery",
+        "ticketing",
+        "merchandise",
+        "lightning_payments",
+        "decentralized_identity",
+        "social_interaction",
+        "analytics",
+        "content_creation",
+        "onboarding",
+        "localization",
+        "ai_integration",
+        "user_feedback",
+        "marketplace",
+        "cross_platform",
+        "post_event"
+      ]
+    },
+    "persona": {
+      "type": "string",
+      "description": "The primary user persona this story addresses",
+      "enum": [
+        "artist",
+        "fan",
+        "promoter",
+        "venue",
+        "platform_admin",
+        "casual_eventgoer",
+        "dedicated_fan",
+        "emerging_artist",
+        "established_artist",
+        "merchandise_buyer",
+        "content_creator"
+      ]
+    },
+    "implementation_phase": {
+      "type": "string",
+      "description": "The phase of development when this story should be implemented",
+      "enum": [
+        "prototype",
+        "mvp",
+        "post_mvp",
+        "iceland_launch",
+        "norway_expansion",
+        "nordic_expansion",
+        "global_expansion"
+      ]
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "IDs of user stories that must be completed before this one",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stakeholders": {
+      "type": "array",
+      "description": "Teams or individuals responsible for or affected by this story",
+      "items": {
+        "type": "string"
+      }
+    },
+    "estimated_effort": {
+      "type": "string",
+      "description": "Estimated level of effort to implement",
+      "enum": ["xs", "s", "m", "l", "xl"]
+    },
+    "cosmic_significance": {
+      "type": "integer",
+      "description": "On Marvin's scale of cosmic significance (1-42, where 42 is the ultimate answer)",
+      "minimum": 1,
+      "maximum": 42
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes, context, or explanations"
+    }
+  }
+} 

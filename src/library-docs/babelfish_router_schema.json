@@ -1,0 +1,443 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BabelFish Router Schema",
+  "description": "A schema for the BabelFish Router component that handles request routing in the VAEBZ platform",
+  "type": "object",
+  "required": ["request_id", "input_data", "routing"],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Unique identifier for the routing request"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the routing request was received"
+    },
+    "input_data": {
+      "type": "object",
+      "description": "The input data to be routed",
+      "required": ["content", "metadata"],
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The content of the input request"
+        },
+        "content_type": {
+          "type": "string",
+          "enum": ["text", "json", "markdown", "binary"],
+          "description": "The format of the input content"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Metadata about the request",
+          "properties": {
+            "source": {
+              "type": "string",
+              "description": "Source of the request (e.g., UI, API, CLI)"
+            },
+            "user_id": {
+              "type": "string",
+              "description": "ID of the user making the request"
+            },
+            "session_id": {
+              "type": "string",
+              "description": "Session identifier for this interaction"
+            },
+            "client_info": {
+              "type": "object",
+              "description": "Information about the client",
+              "properties": {
+                "ip": {
+                  "type": "string",
+                  "description": "IP address of the client"
+                },
+                "user_agent": {
+                  "type": "string",
+                  "description": "User agent of the client"
+                },
+                "device_type": {
+                  "type": "string",
+                  "enum": ["desktop", "mobile", "tablet", "unknown"],
+                  "description": "Type of device making the request"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "intent_classification": {
+      "type": "object",
+      "description": "Classification of the user's intent",
+      "properties": {
+        "primary_intent": {
+          "type": "string",
+          "description": "Primary detected intent"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score for the primary intent"
+        },
+        "secondary_intents": {
+          "type": "array",
+          "description": "Other potential intents with lower confidence",
+          "items": {
+            "type": "object",
+            "properties": {
+              "intent": {
+                "type": "string",
+                "description": "Secondary intent"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Confidence score for this intent"
+              }
+            }
+          }
+        },
+        "domain": {
+          "type": "string",
+          "description": "Functional domain of the intent"
+        },
+        "entities": {
+          "type": "array",
+          "description": "Entities extracted from the input",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of entity"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value of the entity"
+              },
+              "start": {
+                "type": "integer",
+                "description": "Start position in the input text"
+              },
+              "end": {
+                "type": "integer",
+                "description": "End position in the input text"
+              }
+            }
+          }
+        }
+      }
+    },
+    "rbac_validation": {
+      "type": "object",
+      "description": "Results of RBAC validation",
+      "properties": {
+        "is_authorized": {
+          "type": "boolean",
+          "description": "Whether the user is authorized for this action"
+        },
+        "user_roles": {
+          "type": "array",
+          "description": "Roles of the user",
+          "items": {
+            "type": "string"
+          }
+        },
+        "permissions": {
+          "type": "array",
+          "description": "Permissions the user has for this action",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validation_details": {
+          "type": "string",
+          "description": "Details about the validation result"
+        }
+      }
+    },
+    "context_analysis": {
+      "type": "object",
+      "description": "Analysis of the context for this request",
+      "properties": {
+        "user_history": {
+          "type": "array",
+          "description": "Recent history for this user",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "Previous action"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When the action occurred"
+              }
+            }
+          }
+        },
+        "session_state": {
+          "type": "object",
+          "description": "Current state of the user's session",
+          "additionalProperties": true
+        },
+        "active_workflow": {
+          "type": "object",
+          "description": "Details about an active workflow if one exists",
+          "properties": {
+            "workflow_id": {
+              "type": "string",
+              "description": "ID of the active workflow"
+            },
+            "workflow_type": {
+              "type": "string",
+              "description": "Type of the workflow",
+              "enum": ["proposal", "user_story", "development", "deployment"]
+            },
+            "current_stage": {
+              "type": "string",
+              "description": "Current stage in the workflow"
+            },
+            "artifacts": {
+              "type": "array",
+              "description": "Artifacts associated with this workflow",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the artifact"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "Type of artifact"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "URL to the artifact"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "relevance_scores": {
+          "type": "object",
+          "description": "Relevance scores for different domains",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "description": "Routing decision for this request",
+      "required": ["handler", "decision"],
+      "properties": {
+        "handler": {
+          "type": "string",
+          "description": "The handler that will process this request"
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["direct", "fallback", "error", "disambiguation", "auth_required"],
+          "description": "Type of routing decision made"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence in the routing decision"
+        },
+        "handler_params": {
+          "type": "object",
+          "description": "Parameters to pass to the handler",
+          "additionalProperties": true
+        },
+        "fallback_handlers": {
+          "type": "array",
+          "description": "Alternative handlers if the primary fails",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "description": "Telemetry data collected during routing",
+      "properties": {
+        "processing_time_ms": {
+          "type": "number",
+          "description": "Time taken to process the routing request in milliseconds"
+        },
+        "classification_time_ms": {
+          "type": "number",
+          "description": "Time taken for intent classification in milliseconds"
+        },
+        "validation_time_ms": {
+          "type": "number",
+          "description": "Time taken for RBAC validation in milliseconds"
+        },
+        "context_time_ms": {
+          "type": "number",
+          "description": "Time taken for context analysis in milliseconds"
+        },
+        "routing_time_ms": {
+          "type": "number",
+          "description": "Time taken for the routing decision in milliseconds"
+        },
+        "pipeline_events": {
+          "type": "array",
+          "description": "Events that occurred during processing",
+          "items": {
+            "type": "object",
+            "properties": {
+              "component": {
+                "type": "string",
+                "description": "Component that generated the event"
+              },
+              "event_type": {
+                "type": "string",
+                "description": "Type of event"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "description": "When the event occurred"
+              },
+              "details": {
+                "type": "object",
+                "description": "Details about the event",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "integrations": {
+      "type": "object",
+      "description": "Integration data with other VAEBZ systems",
+      "properties": {
+        "marvin": {
+          "type": "object",
+          "description": "Integration with Marvin",
+          "properties": {
+            "involved": {
+              "type": "boolean",
+              "description": "Whether Marvin was involved in this request"
+            },
+            "recommendation": {
+              "type": "string",
+              "description": "Recommendation from Marvin if applicable"
+            },
+            "insights": {
+              "type": "array",
+              "description": "Insights provided by Marvin",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "mem0": {
+          "type": "object",
+          "description": "Integration with MEM0",
+          "properties": {
+            "query_id": {
+              "type": "string",
+              "description": "ID of the MEM0 query if performed"
+            },
+            "embedding_id": {
+              "type": "string",
+              "description": "ID of the embedding if created"
+            },
+            "semantic_tokens": {
+              "type": "array",
+              "description": "Semantic tokens from MEM0",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "babelfish_plugins": {
+          "type": "array",
+          "description": "Plugins that were activated during processing",
+          "items": {
+            "type": "object",
+            "properties": {
+              "plugin_id": {
+                "type": "string",
+                "description": "ID of the plugin"
+              },
+              "version": {
+                "type": "string",
+                "description": "Version of the plugin"
+              },
+              "action": {
+                "type": "string",
+                "description": "Action performed by the plugin"
+              }
+            }
+          }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Response data (filled after processing)",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["success", "error", "pending"],
+          "description": "Status of the response"
+        },
+        "status_code": {
+          "type": "integer",
+          "description": "HTTP-like status code"
+        },
+        "content": {
+          "type": "string",
+          "description": "Response content if available"
+        },
+        "content_type": {
+          "type": "string",
+          "description": "MIME type of the response content"
+        },
+        "processing_time_ms": {
+          "type": "number",
+          "description": "Total time to process the request in milliseconds"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error details if applicable",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code"
+            },
+            "message": {
+              "type": "string",
+              "description": "Error message"
+            },
+            "details": {
+              "type": "object",
+              "description": "Additional error details",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    }
+  }
+} 

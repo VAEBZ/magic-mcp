@@ -1,81 +1,237 @@
-#!/usr/bin/env node
+import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyWebsocketHandlerV2 } from 'aws-lambda';
+import { createComponent, getComponent, listComponents, updateComponent, deleteComponent } from './handlers/components';
+import { generatePreview } from './handlers/preview';
+import { DiscoveryService } from './services/discovery';
+import { HealthService } from './services/health';
+import { WebSocketService } from './services/websocket';
 
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+// Initialize services
+const discoveryService = new DiscoveryService();
+const healthService = new HealthService();
+const webSocketService = new WebSocketService();
 
-import { setupJsonConsole } from "./utils/console.js";
-
-import { CreateUiTool } from "./tools/create-ui.js";
-import { FetchUiTool } from "./tools/fetch-ui.js";
-import { LogoSearchTool } from "./tools/logo-search.js";
-import { RefineUiTool } from "./tools/refine-ui.js";
-
-setupJsonConsole();
-
-const VERSION = "0.0.46";
-const server = new McpServer({
-  name: "21st-magic",
-  version: VERSION,
+// Register with MAGRATHEAN on cold start
+discoveryService.register().catch(error => {
+    console.error('Failed to register with MAGRATHEAN:', error);
 });
 
-// Register tools
-new CreateUiTool().register(server);
-new LogoSearchTool().register(server);
-new FetchUiTool().register(server);
-new RefineUiTool().register(server);
-
-async function runServer() {
-  const transport = new StdioServerTransport();
-  console.log(`Starting server v${VERSION} (PID: ${process.pid})`);
-
-  let isShuttingDown = false;
-
-  const cleanup = () => {
-    if (isShuttingDown) return;
-    isShuttingDown = true;
-
-    console.log(`Shutting down server (PID: ${process.pid})...`);
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
-      transport.close();
+        // Remove /dev and /mcp prefixes from path for checking
+        const path = event.path.replace(/^\/dev/, '').replace(/^\/mcp/, '');
+        console.log('Processing request for path:', event.path, 'normalized to:', path);
+
+        // Health check endpoint
+        if (path === '/magic/health') {
+            const status = await healthService.getStatus();
+            return {
+                statusCode: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                    'Access-Control-Allow-Methods': 'GET,OPTIONS'
+                },
+                body: JSON.stringify(status)
+            };
+        }
+
+        // Component endpoints
+        if (path.startsWith('/magic/components')) {
+            // Extract component ID from path
+            const pathParts = path.split('/');
+            const id = pathParts.length > 3 ? pathParts[3] : '';
+
+            switch (event.httpMethod) {
+                case 'GET':
+                    if (id === '') {
+                        return await listComponents();
+                    }
+                    return await getComponent(id);
+
+                case 'POST':
+                    if (id !== '') {
+                        return {
+                            statusCode: 400,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                                'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+                            },
+                            body: JSON.stringify({ message: 'Invalid path for POST request' })
+                        };
+                    }
+                    const createBody = JSON.parse(event.body || '{}');
+                    const componentId = Date.now().toString();
+                    const createResult = await createComponent(createBody.type, createBody.content, componentId);
+                    
+                    // Broadcast component creation event
+                    await webSocketService.broadcastEvent({
+                        event: 'componentCreate',
+                        data: {
+                            action: 'create',
+                            component: { id: componentId, ...createBody },
+                            timestamp: new Date().toISOString()
+                        }
+                    });
+                    
+                    return createResult;
+
+                case 'PUT':
+                    if (id === '') {
+                        return {
+                            statusCode: 400,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                                'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+                            },
+                            body: JSON.stringify({ message: 'Component ID required for update' })
+                        };
+                    }
+                    const updateBody = JSON.parse(event.body || '{}');
+                    const updateResult = await updateComponent(id, updateBody.content, event);
+                    
+                    // Broadcast component update event
+                    await webSocketService.broadcastEvent({
+                        event: 'componentUpdate',
+                        data: {
+                            action: 'update',
+                            component: { id, ...updateBody },
+                            timestamp: new Date().toISOString()
+                        }
+                    });
+                    
+                    return updateResult;
+
+                case 'DELETE':
+                    if (id === '') {
+                        return {
+                            statusCode: 400,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                                'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+                            },
+                            body: JSON.stringify({ message: 'Component ID required for deletion' })
+                        };
+                    }
+                    const deleteResult = await deleteComponent(id, event);
+                    
+                    // Broadcast component deletion event
+                    await webSocketService.broadcastEvent({
+                        event: 'componentDelete',
+                        data: {
+                            action: 'delete',
+                            component: { id },
+                            timestamp: new Date().toISOString()
+                        }
+                    });
+                    
+                    return deleteResult;
+
+                case 'OPTIONS':
+                    return {
+                        statusCode: 200,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
+                            'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                            'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+                        },
+                        body: ''
+                    };
+
+                default:
+                    return {
+                        statusCode: 405,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*',
+                            'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                            'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+                        },
+                        body: JSON.stringify({ message: 'Method not allowed' })
+                    };
+            }
+        }
+
+        // Preview endpoint
+        if (path === '/magic/preview' && event.httpMethod === 'POST') {
+            const previewRequest = JSON.parse(event.body || '{}');
+            return await generatePreview(previewRequest);
+        }
+
+        // Handle unknown paths
+        console.log('Path not matched:', path);
+        return {
+            statusCode: 404,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+            },
+            body: JSON.stringify({
+                message: 'Not Found'
+            })
+        };
     } catch (error) {
-      console.error(`Error closing transport (PID: ${process.pid}):`, error);
+        console.error('Error:', error);
+        return {
+            statusCode: 500,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS'
+            },
+            body: JSON.stringify({
+                message: 'Internal Server Error'
+            })
+        };
     }
-    console.log(`Server closed (PID: ${process.pid})`);
-    process.exit(0);
-  };
+};
 
-  transport.onerror = (error: Error) => {
-    console.error(`Transport error (PID: ${process.pid}):`, error);
-    cleanup();
-  };
+// WebSocket handlers
+export const webSocketConnectHandler: APIGatewayProxyWebsocketHandlerV2 = async (event) => {
+    try {
+        const connectionId = event.requestContext.connectionId;
+        const context = event.requestContext.domainName || 'default';
+        
+        await webSocketService.onConnect(connectionId, context);
+        healthService.incrementConnections();
+        
+        return { statusCode: 200, body: 'Connected' };
+    } catch (error) {
+        console.error('WebSocket connect error:', error);
+        return { statusCode: 500, body: 'Failed to connect' };
+    }
+};
 
-  transport.onclose = () => {
-    console.log(`Transport closed unexpectedly (PID: ${process.pid})`);
-    cleanup();
-  };
+export const webSocketDisconnectHandler: APIGatewayProxyWebsocketHandlerV2 = async (event) => {
+    try {
+        const connectionId = event.requestContext.connectionId;
+        
+        await webSocketService.onDisconnect(connectionId);
+        healthService.decrementConnections();
+        
+        return { statusCode: 200, body: 'Disconnected' };
+    } catch (error) {
+        console.error('WebSocket disconnect error:', error);
+        return { statusCode: 500, body: 'Failed to disconnect' };
+    }
+};
 
-  process.on("SIGTERM", () => {
-    console.log(`Received SIGTERM (PID: ${process.pid})`);
-    cleanup();
-  });
-
-  process.on("SIGINT", () => {
-    console.log(`Received SIGINT (PID: ${process.pid})`);
-    cleanup();
-  });
-
-  process.on("beforeExit", () => {
-    console.log(`Received beforeExit (PID: ${process.pid})`);
-    cleanup();
-  });
-
-  await server.connect(transport);
-  console.log(`Server started (PID: ${process.pid})`);
-}
-
-runServer().catch((error) => {
-  console.error(`Fatal error running server (PID: ${process.pid}):`, error);
-  if (!process.exitCode) {
-    process.exit(1);
-  }
-});
+export const webSocketDefaultHandler: APIGatewayProxyWebsocketHandlerV2 = async (event) => {
+    try {
+        // Handle any custom WebSocket messages here
+        return { statusCode: 200, body: 'Message received' };
+    } catch (error) {
+        console.error('WebSocket message error:', error);
+        return { statusCode: 500, body: 'Failed to process message' };
+    }
+};

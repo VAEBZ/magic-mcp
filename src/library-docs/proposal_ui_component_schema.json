@@ -1,0 +1,506 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Proposal UI Component Schema",
+  "description": "Configuration schema for proposal workflow UI components in SentinelGaze",
+  "type": "object",
+  "required": ["component_id", "component_type", "display_config"],
+  "properties": {
+    "component_id": {
+      "type": "string",
+      "description": "Unique identifier for the UI component"
+    },
+    "component_type": {
+      "type": "string",
+      "enum": [
+        "proposal_card",
+        "idea_card",
+        "workflow_indicator",
+        "status_badge",
+        "progress_bar",
+        "activity_timeline",
+        "comment_thread",
+        "related_artifacts",
+        "proposal_dashboard",
+        "proposal_detail",
+        "idea_form",
+        "metadata_panel",
+        "actions_panel",
+        "filter_panel"
+      ],
+      "description": "Type of UI component"
+    },
+    "display_config": {
+      "type": "object",
+      "description": "Display configuration for the component",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "enum": ["light", "dark", "system"],
+          "description": "Color theme for the component"
+        },
+        "size": {
+          "type": "string",
+          "enum": ["xs", "sm", "md", "lg", "xl", "full"],
+          "description": "Size variant for the component"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["horizontal", "vertical", "grid", "compact"],
+          "description": "Layout orientation for the component"
+        },
+        "animation": {
+          "type": "boolean",
+          "description": "Whether to enable animations"
+        },
+        "compact_view": {
+          "type": "boolean",
+          "description": "Whether to show a compact view (less details)"
+        },
+        "show_header": {
+          "type": "boolean",
+          "description": "Whether to show the component header"
+        },
+        "show_footer": {
+          "type": "boolean",
+          "description": "Whether to show the component footer"
+        },
+        "custom_classes": {
+          "type": "string",
+          "description": "Custom CSS classes to apply"
+        },
+        "max_height": {
+          "type": "string",
+          "description": "Maximum height (CSS value)"
+        },
+        "max_width": {
+          "type": "string",
+          "description": "Maximum width (CSS value)"
+        }
+      }
+    },
+    "data_config": {
+      "type": "object",
+      "description": "Configuration for data handling",
+      "properties": {
+        "data_source": {
+          "type": "string",
+          "enum": ["api", "local", "graphql", "context"],
+          "description": "Source of data for this component"
+        },
+        "api_endpoint": {
+          "type": "string",
+          "description": "API endpoint to fetch data from"
+        },
+        "query": {
+          "type": "string",
+          "description": "GraphQL query or API query string"
+        },
+        "polling_interval": {
+          "type": "integer",
+          "description": "Interval in milliseconds for polling updates"
+        },
+        "cache_ttl": {
+          "type": "integer",
+          "description": "Time to live for cached data in seconds"
+        },
+        "pagination": {
+          "type": "object",
+          "description": "Pagination configuration",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether pagination is enabled"
+            },
+            "page_size": {
+              "type": "integer",
+              "description": "Number of items per page"
+            },
+            "strategy": {
+              "type": "string",
+              "enum": ["offset", "cursor", "infinite"],
+              "description": "Pagination strategy"
+            }
+          }
+        },
+        "filters": {
+          "type": "array",
+          "description": "Default filters to apply",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string",
+                "description": "Field to filter on"
+              },
+              "operator": {
+                "type": "string",
+                "enum": ["eq", "neq", "gt", "lt", "gte", "lte", "contains", "starts_with", "in"],
+                "description": "Filter operator"
+              },
+              "value": {
+                "description": "Filter value"
+              }
+            }
+          }
+        },
+        "sorting": {
+          "type": "object",
+          "description": "Default sorting configuration",
+          "properties": {
+            "field": {
+              "type": "string",
+              "description": "Field to sort by"
+            },
+            "direction": {
+              "type": "string",
+              "enum": ["asc", "desc"],
+              "description": "Sort direction"
+            }
+          }
+        },
+        "transformations": {
+          "type": "array",
+          "description": "Data transformations to apply before rendering",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["format", "filter", "map", "reduce", "sort", "group"],
+                "description": "Type of transformation"
+              },
+              "config": {
+                "type": "object",
+                "description": "Configuration for the transformation",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "interaction_config": {
+      "type": "object",
+      "description": "Configuration for user interactions",
+      "properties": {
+        "actions": {
+          "type": "array",
+          "description": "Available actions for this component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the action"
+              },
+              "label": {
+                "type": "string",
+                "description": "Display label for the action"
+              },
+              "icon": {
+                "type": "string",
+                "description": "Icon identifier for the action"
+              },
+              "action_type": {
+                "type": "string",
+                "enum": [
+                  "link", 
+                  "api_call", 
+                  "modal", 
+                  "workflow", 
+                  "download", 
+                  "generate", 
+                  "edit", 
+                  "delete",
+                  "comment",
+                  "vote",
+                  "share"
+                ],
+                "description": "Type of action"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target for the action (URL, modal ID, etc.)"
+              },
+              "confirmation": {
+                "type": "object",
+                "description": "Confirmation dialog configuration",
+                "properties": {
+                  "required": {
+                    "type": "boolean",
+                    "description": "Whether confirmation is required"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Title for the confirmation dialog"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "Message for the confirmation dialog"
+                  }
+                }
+              },
+              "rbac": {
+                "type": "object",
+                "description": "RBAC requirements for the action",
+                "properties": {
+                  "roles": {
+                    "type": "array",
+                    "description": "Roles allowed to perform this action",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "permissions": {
+                    "type": "array",
+                    "description": "Permissions required for this action",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "events": {
+          "type": "array",
+          "description": "Events that this component can emit or listen to",
+          "items": {
+            "type": "object",
+            "properties": {
+              "event_name": {
+                "type": "string",
+                "description": "Name of the event"
+              },
+              "direction": {
+                "type": "string",
+                "enum": ["emit", "listen", "both"],
+                "description": "Whether the component emits or listens for this event"
+              },
+              "payload_schema": {
+                "type": "object",
+                "description": "Schema for the event payload",
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "keyboard_shortcuts": {
+          "type": "array",
+          "description": "Keyboard shortcuts for this component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "keys": {
+                "type": "string",
+                "description": "Key combination (e.g., 'Ctrl+S')"
+              },
+              "action_id": {
+                "type": "string",
+                "description": "ID of the action to trigger"
+              },
+              "scope": {
+                "type": "string",
+                "enum": ["global", "component", "modal"],
+                "description": "Scope for the shortcut"
+              }
+            }
+          }
+        },
+        "drag_drop": {
+          "type": "object",
+          "description": "Drag and drop configuration",
+          "properties": {
+            "draggable": {
+              "type": "boolean",
+              "description": "Whether items in this component can be dragged"
+            },
+            "drop_zones": {
+              "type": "array",
+              "description": "Components that can accept drops from this component",
+              "items": {
+                "type": "string"
+              }
+            },
+            "drag_types": {
+              "type": "array",
+              "description": "Types of draggable items from this component",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "children": {
+      "type": "array",
+      "description": "Child components contained within this component",
+      "items": {
+        "type": "object",
+        "properties": {
+          "component_id": {
+            "type": "string",
+            "description": "ID of the child component"
+          },
+          "slot": {
+            "type": "string",
+            "description": "Slot in the parent component where this child should be rendered"
+          },
+          "condition": {
+            "type": "string",
+            "description": "Condition expression for conditionally rendering this child"
+          }
+        }
+      }
+    },
+    "localization": {
+      "type": "object",
+      "description": "Localization configuration",
+      "properties": {
+        "default_locale": {
+          "type": "string",
+          "description": "Default locale for this component"
+        },
+        "translations": {
+          "type": "object",
+          "description": "Translation keys and values",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "analytics": {
+      "type": "object",
+      "description": "Analytics configuration",
+      "properties": {
+        "track_views": {
+          "type": "boolean",
+          "description": "Whether to track views of this component"
+        },
+        "track_interactions": {
+          "type": "boolean",
+          "description": "Whether to track interactions with this component"
+        },
+        "custom_events": {
+          "type": "array",
+          "description": "Custom events to track",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the custom event"
+              },
+              "properties": {
+                "type": "array",
+                "description": "Properties to capture with the event",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "description": "Accessibility configuration",
+      "properties": {
+        "aria_label": {
+          "type": "string",
+          "description": "ARIA label for the component"
+        },
+        "aria_describedby": {
+          "type": "string",
+          "description": "ID of element that describes this component"
+        },
+        "aria_live": {
+          "type": "string",
+          "enum": ["off", "polite", "assertive"],
+          "description": "ARIA live region setting"
+        },
+        "focus_behavior": {
+          "type": "string",
+          "enum": ["auto", "trap", "restore", "custom"],
+          "description": "Focus management behavior"
+        },
+        "keyboard_navigation": {
+          "type": "boolean",
+          "description": "Whether keyboard navigation is enabled"
+        }
+      }
+    },
+    "responsive_config": {
+      "type": "object",
+      "description": "Responsive behavior configuration",
+      "properties": {
+        "breakpoints": {
+          "type": "object",
+          "description": "Configurations for different breakpoints",
+          "properties": {
+            "mobile": {
+              "type": "object",
+              "description": "Configuration for mobile devices",
+              "additionalProperties": true
+            },
+            "tablet": {
+              "type": "object",
+              "description": "Configuration for tablet devices",
+              "additionalProperties": true
+            },
+            "desktop": {
+              "type": "object",
+              "description": "Configuration for desktop devices",
+              "additionalProperties": true
+            },
+            "large": {
+              "type": "object",
+              "description": "Configuration for large desktop devices",
+              "additionalProperties": true
+            }
+          }
+        },
+        "min_width": {
+          "type": "string",
+          "description": "Minimum width for the component"
+        },
+        "min_height": {
+          "type": "string",
+          "description": "Minimum height for the component"
+        },
+        "collapse_behavior": {
+          "type": "string",
+          "enum": ["hide", "stack", "truncate", "scale"],
+          "description": "Behavior when space is constrained"
+        }
+      }
+    },
+    "testing": {
+      "type": "object",
+      "description": "Testing configuration",
+      "properties": {
+        "test_id": {
+          "type": "string",
+          "description": "Test identifier for this component"
+        },
+        "mock_data": {
+          "type": "object",
+          "description": "Mock data for testing",
+          "additionalProperties": true
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata for the component",
+      "additionalProperties": true
+    }
+  }
+} 
